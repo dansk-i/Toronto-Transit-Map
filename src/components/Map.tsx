@@ -3,6 +3,8 @@ import Map from 'react-map-gl/maplibre';
 import type { MapRef } from 'react-map-gl/maplibre';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
+import { Source, Layer } from 'react-map-gl/maplibre';
+
 
 type ViewMode = 'default' | 'worldMap' | 'angled3D';
 
@@ -48,7 +50,31 @@ export default function TorontoMap() {
           [-79.722290, 43.572929],
           [-79.111176, 43.909766],
         ]}
-      />
+        
+      >
+        {/* TTC Subway Lines */}
+        <Source
+          id="subway-lines"
+          type="geojson"
+          data="/geojson/ttc-subway-current.geojson"
+        >
+          <Layer
+            id="ttc-subway-lines"
+            type="line"
+            beforeId="building"
+            paint={{
+              'line-color': '#ff0000',
+              'line-width': 4,
+              'line-opacity': 0.9
+            }}
+            layout={{
+              'line-join': 'round',
+              'line-cap': 'round'
+            }}
+          />
+        </Source>
+      </Map>
+      
 
       {/* View Toggle */}
       <div
