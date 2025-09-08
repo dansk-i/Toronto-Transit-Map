@@ -58,19 +58,55 @@ export default function TorontoMap() {
           type="geojson"
           data="/geojson/ttc-subway-current.geojson"
         >
+          {/* Line 1 - Yellow */}
           <Layer
-            id="ttc-subway-lines"
+            id="line-1"
             type="line"
-            beforeId="building"
+            filter={['==', ['get', 'name'], 'Line 1 - Yonge-University']}
             paint={{
-              'line-color': '#ff0000',
+              'line-color': '#FFCA09',
               'line-width': 4,
-              'line-opacity': 0.9
+              'line-opacity': 0.9,
             }}
             layout={{
               'line-join': 'round',
-              'line-cap': 'round'
+              'line-cap': 'round',
             }}
+            beforeId="building"
+          />
+
+          {/* Line 2 - Green */}
+          <Layer
+            id="line-2"
+            type="line"
+            filter={['==', ['get', 'name'], 'Line 2 - Bloor-Danforth']}
+            paint={{
+              'line-color': '#00A754',
+              'line-width': 4,
+              'line-opacity': 0.9,
+            }}
+            layout={{
+              'line-join': 'round',
+              'line-cap': 'round',
+            }}
+            beforeId="building"
+          />
+
+          {/* Line 4 - Purple */}
+          <Layer
+            id="line-4"
+            type="line"
+            filter={['==', ['get', 'name'], 'Line 4 - Sheppard']}
+            paint={{
+              'line-color': '#B51A79',
+              'line-width': 4,
+              'line-opacity': 0.9,
+            }}
+            layout={{
+              'line-join': 'round',
+              'line-cap': 'round',
+            }}
+            beforeId="building"
           />
         </Source>
       </Map>
