@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import Map from 'react-map-gl/maplibre';
 import type { MapRef } from 'react-map-gl/maplibre';
 import maplibregl from 'maplibre-gl';
@@ -11,6 +11,7 @@ type ViewMode = 'default' | 'worldMap' | 'angled3D';
 export default function TorontoMap() {
   const mapRef = useRef<MapRef>(null);
   const [viewMode, setViewMode] = useState<ViewMode>('default');
+  const [stationDots, setStationDots] = useState<GeoJSON.FeatureCollection | null>(null);
 
   const handleViewChange = useCallback((mode: ViewMode) => {
     setViewMode(mode);
@@ -28,6 +29,30 @@ export default function TorontoMap() {
       duration: 1000,
     });
   }, []);
+
+  useEffect(() => {
+  const fetchStations = async () => {
+    const res = await fetch("/geojson/ttc-subway-current.geojson");
+    const geo = await res.json();
+
+    const features = geo.features.flatMap((feature: any) =>
+      feature.geometry.coordinates.map((coord: number[]) => ({
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: coord,
+        },
+      }))
+    );
+
+    setStationDots({
+      type: 'FeatureCollection',
+      features,
+    });
+  };
+
+  fetchStations();
+}, []);
 
   return (
     <div style={{ position: 'relative', width: '100vw', height: '100vh' }}>
@@ -62,7 +87,7 @@ export default function TorontoMap() {
           <Layer
             id="line-1"
             type="line"
-            filter={['==', ['get', 'name'], 'Line 1 - Yonge-University']}
+            filter={['==', ['get', 'name'], 'Line 1']}
             paint={{
               'line-color': '#FFCA09',
               'line-width': 4,
@@ -79,7 +104,7 @@ export default function TorontoMap() {
           <Layer
             id="line-2"
             type="line"
-            filter={['==', ['get', 'name'], 'Line 2 - Bloor-Danforth']}
+            filter={['==', ['get', 'name'], 'Line 2']}
             paint={{
               'line-color': '#00A754',
               'line-width': 4,
@@ -96,7 +121,7 @@ export default function TorontoMap() {
           <Layer
             id="line-4"
             type="line"
-            filter={['==', ['get', 'name'], 'Line 4 - Sheppard']}
+            filter={['==', ['get', 'name'], 'Line 4']}
             paint={{
               'line-color': '#B51A79',
               'line-width': 4,
@@ -109,6 +134,21 @@ export default function TorontoMap() {
             beforeId="building"
           />
         </Source>
+        {stationDots && (
+        <Source id="station-dots" type="geojson" data={stationDots}>
+          <Layer
+            id="station-points"
+            type="circle"
+            paint={{
+              'circle-radius': 4,
+              'circle-color': '#000000',
+              'circle-stroke-width': 1,
+              'circle-stroke-color': '#ffffff',
+            }}
+            beforeId="building"
+          />
+        </Source>
+      )}
       </Map>
       
 

@@ -4,203 +4,203 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Line 1 - Yonge-University",
+        "name": "Line 1",
         "color": "#FFCA09",
         "stations": [
-          "Vaughan Metropolitan Centre",
-          "Highway 407",
-          "Pioneer Village",
+          "Finch Station",
+          "North York Centre Station",
+          "Sheppard-Yonge Station",
+          "York Mills Station",
+          "Lawrence Station",
+          "Eglinton Station",
+          "Davisville Station",
+          "St Clair Station",
+          "Summerhill Station",
+          "Rosedale Station",
+          "Bloor Station",
+          "Wellesley Station",
+          "College Station",
+          "Dundas Station",
+          "Queen Station",
+          "King Station",
+          "Union Station",
+          "St Andrew Station",
+          "Osgoode Station",
+          "St Patrick Station",
+          "Queen's Park Station",
+          "Museum Station",
+          "St George Station",
+          "Spadina Station",
+          "Dupont Station",
+          "St Clair West Station",
+          "Eglinton West Station",
+          "Glencairn Station",
+          "Lawrence West Station",
+          "Yorkdale Station",
+          "Wilson Station",
+          "Sheppard West Station",
+          "Downsview Park Station",
+          "Finch West Station",
           "York University",
-          "Finch West",
-          "Downsview Park",
-          "Sheppard West",
-          "Wilson",
-          "Yorkdale",
-          "Lawrence West",
-          "Glencairn",
-          "Eglinton West",
-          "St. Clair West",
-          "Dupont",
-          "Spadina",
-          "St. George",
-          "Museum",
-          "Queen's Park",
-          "St. Patrick",
-          "Osgoode",
-          "St. Andrew",
-          "Union",
-          "King",
-          "Queen",
-          "Dundas",
-          "College",
-          "Wellesley",
-          "Bloor-Yonge",
-          "Rosedale",
-          "Summerhill",
-          "St. Clair",
-          "Davisville",
-          "Eglinton",
-          "Lawrence",
-          "York Mills",
-          "Sheppard-Yonge",
-          "North York Centre",
-          "Finch"
+          "Pioneer Village Station",
+          "Highway 407 Station",
+          "Vaughan Metropolitan Centre Station"
         ]
       },
       "geometry": {
         "type": "LineString",
         "coordinates": [
           [
-            -79.527906,
-            43.794021
+            -79.415692,
+            43.780147
+          ],
+          [
+            -79.412492,
+            43.767347
+          ],
+          [
+            -79.410691,
+            43.760348
+          ],
+          [
+            -79.405991,
+            43.743248
+          ],
+          [
+            -79.40229,
+            43.725348
+          ],
+          [
+            -79.39889,
+            43.704648
+          ],
+          [
+            -79.39689,
+            43.697048
+          ],
+          [
+            -79.393089,
+            43.687449
+          ],
+          [
+            -79.390789,
+            43.682049
+          ],
+          [
+            -79.388089,
+            43.676049
+          ],
+          [
+            -79.385389,
+            43.670049
+          ],
+          [
+            -79.383488,
+            43.664949
+          ],
+          [
+            -79.382688,
+            43.660149
+          ],
+          [
+            -79.380788,
+            43.655949
+          ],
+          [
+            -79.379188,
+            43.652149
+          ],
+          [
+            -79.377688,
+            43.648449
+          ],
+          [
+            -79.381488,
+            43.645549
+          ],
+          [
+            -79.385088,
+            43.648249
+          ],
+          [
+            -79.386888,
+            43.651749
+          ],
+          [
+            -79.388388,
+            43.655249
+          ],
+          [
+            -79.390689,
+            43.660549
+          ],
+          [
+            -79.393389,
+            43.667249
+          ],
+          [
+            -79.399689,
+            43.668249
+          ],
+          [
+            -79.405189,
+            43.670249
+          ],
+          [
+            -79.40709,
+            43.674949
+          ],
+          [
+            -79.41589,
+            43.685148
+          ],
+          [
+            -79.436691,
+            43.700648
+          ],
+          [
+            -79.440892,
+            43.709148
+          ],
+          [
+            -79.444038,
+            43.715784
+          ],
+          [
+            -79.447692,
+            43.725248
+          ],
+          [
+            -79.450192,
+            43.735048
+          ],
+          [
+            -79.462781,
+            43.750204
+          ],
+          [
+            -79.478693,
+            43.753311
+          ],
+          [
+            -79.491118,
+            43.764855
+          ],
+          [
+            -79.499888,
+            43.774097
+          ],
+          [
+            -79.509334,
+            43.776741
           ],
           [
             -79.523454,
             43.783359
           ],
           [
-            -79.512108,
-            43.772944
-          ],
-          [
-            -79.508084,
-            43.768424
-          ],
-          [
-            -79.49581,
-            43.763768
-          ],
-          [
-            -79.4911,
-            43.760353
-          ],
-          [
-            -79.481015,
-            43.757409
-          ],
-          [
-            -79.45018,
-            43.734758
-          ],
-          [
-            -79.452262,
-            43.724429
-          ],
-          [
-            -79.444701,
-            43.713144
-          ],
-          [
-            -79.439317,
-            43.709243
-          ],
-          [
-            -79.425906,
-            43.705378
-          ],
-          [
-            -79.415978,
-            43.682657
-          ],
-          [
-            -79.409445,
-            43.674847
-          ],
-          [
-            -79.405572,
-            43.668262
-          ],
-          [
-            -79.399578,
-            43.668263
-          ],
-          [
-            -79.393313,
-            43.66771
-          ],
-          [
-            -79.390185,
-            43.659836
-          ],
-          [
-            -79.388574,
-            43.654384
-          ],
-          [
-            -79.386869,
-            43.650702
-          ],
-          [
-            -79.38412,
-            43.647285
-          ],
-          [
-            -79.380682,
-            43.645195
-          ],
-          [
-            -79.377706,
-            43.648237
-          ],
-          [
-            -79.377719,
-            43.653564
-          ],
-          [
-            -79.380187,
-            43.656735
-          ],
-          [
-            -79.383547,
-            43.661186
-          ],
-          [
-            -79.38545,
-            43.6655
-          ],
-          [
-            -79.386869,
-            43.671685
-          ],
-          [
-            -79.388529,
-            43.676832
-          ],
-          [
-            -79.391094,
-            43.681925
-          ],
-          [
-            -79.395056,
-            43.686744
-          ],
-          [
-            -79.403356,
-            43.693126
-          ],
-          [
-            -79.398101,
-            43.70642
-          ],
-          [
-            -79.402772,
-            43.722274
-          ],
-          [
-            -79.403718,
-            43.744186
-          ],
-          [
-            -79.410264,
-            43.761532
-          ],
-          [
-            -79.412492,
-            43.768206
-          ],
-          [
-            -79.4154915,
-            43.780497
+            -79.527906,
+            43.794021
           ]
         ]
       }
@@ -208,168 +208,168 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Line 2 - Bloor-Danforth",
+        "name": "Line 2",
         "color": "#00A754",
         "stations": [
-          "Kipling",
-          "Islington",
-          "Royal York",
-          "Old Mill",
-          "Jane",
-          "Runnymede",
-          "High Park",
-          "Keele",
-          "Dundas West",
-          "Lansdowne",
-          "Dufferin",
-          "Ossington",
-          "Christie",
-          "Bathurst",
-          "Spadina",
-          "St. George",
-          "Bay",
-          "Bloor-Yonge",
-          "Sherbourne",
-          "Castle Frank",
-          "Broadview",
-          "Chester",
-          "Pape",
-          "Donlands",
-          "Greenwood",
-          "Coxwell",
-          "Woodbine",
-          "Main Street",
-          "Victoria Park",
-          "Warden",
-          "Kennedy"
+          "Kipling Station",
+          "Islington Station",
+          "Royal York Station",
+          "Old Mill Station",
+          "Jane Station",
+          "Runnymede Station",
+          "High Park Station",
+          "Keele Station",
+          "Dundas West Station",
+          "Lansdowne Station",
+          "Dufferin Station",
+          "Ossington Station",
+          "Christie Station",
+          "Bathurst Station",
+          "Spadina Station",
+          "St George Station",
+          "Bay Station",
+          "Yonge Station",
+          "Sherbourne Station",
+          "Castle Frank Station",
+          "Broadview Station",
+          "Chester Station",
+          "Pape Station",
+          "Donlands Station",
+          "Greenwood Station",
+          "Coxwell Station",
+          "Woodbine Station",
+          "Main Street Station",
+          "Victoria Park Station",
+          "Warden Station",
+          "Kennedy Station"
         ]
       },
       "geometry": {
         "type": "LineString",
         "coordinates": [
           [
-            -79.535365,
-            43.636937
+            -79.535694,
+            43.637648
           ],
           [
-            -79.526859,
-            43.645154
+            -79.523293,
+            43.645548
           ],
           [
-            -79.511153,
-            43.648337
+            -79.508693,
+            43.648548
           ],
           [
-            -79.494097,
-            43.649806
+            -79.493392,
+            43.649448
           ],
           [
-            -79.48342,
-            43.6517
+            -79.482892,
+            43.650149
           ],
           [
-            -79.478426,
-            43.653389
+            -79.474992,
+            43.652049
           ],
           [
-            -79.46639,
-            43.653652
+            -79.466991,
+            43.653849
           ],
           [
-            -79.459,
-            43.655003
+            -79.458691,
+            43.655649
           ],
           [
-            -79.452706,
-            43.656277
+            -79.451091,
+            43.657449
           ],
           [
-            -79.443352,
-            43.65686
+            -79.442463,
+            43.659246
           ],
           [
-            -79.43784,
-            43.656371
+            -79.43389,
+            43.660849
           ],
           [
-            -79.428719,
-            43.65605
+            -79.42609,
+            43.662349
           ],
           [
-            -79.42065,
-            43.664111
+            -79.41729,
+            43.664449
           ],
           [
-            -79.411195,
-            43.666803
+            -79.410589,
+            43.665949
           ],
           [
-            -79.405572,
-            43.668262
+            -79.403889,
+            43.667249
           ],
           [
-            -79.399578,
-            43.668263
+            -79.397989,
+            43.668549
           ],
           [
-            -79.390799,
-            43.670345
+            -79.390089,
+            43.670149
           ],
           [
-            -79.386869,
-            43.671685
+            -79.385956,
+            43.670997
           ],
           [
-            -79.376817,
-            43.672798
+            -79.376162,
+            43.672103
           ],
           [
-            -79.368285,
-            43.673737
+            -79.368088,
+            43.674049
           ],
           [
-            -79.357899,
-            43.676285
+            -79.358088,
+            43.677049
           ],
           [
-            -79.344978,
-            43.678498
+            -79.352502,
+            43.678241
           ],
           [
-            -79.349819,
-            43.679346
+            -79.344087,
+            43.679949
           ],
           [
-            -79.337824,
-            43.681805
+            -79.337487,
+            43.681149
           ],
           [
-            -79.32549,
-            43.682967
+            -79.331687,
+            43.682549
           ],
           [
-            -79.314421,
-            43.684111
+            -79.321986,
+            43.684549
           ],
           [
-            -79.304674,
-            43.685276
+            -79.312286,
+            43.686649
           ],
           [
-            -79.301255,
-            43.688293
+            -79.300686,
+            43.689249
           ],
           [
-            -79.289436,
-            43.691597
+            -79.287885,
+            43.695149
           ],
           [
-            -79.284703,
-            43.697586
+            -79.278785,
+            43.712149
           ],
           [
-            -79.263962,
-            43.732114
+            -79.263718,
+            43.732487
           ]
         ]
       }
@@ -377,7 +377,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Line 4 - Sheppard",
+        "name": "Line 4",
         "color": "#B51A79",
         "stations": [
           "Sheppard-Yonge",
@@ -391,24 +391,24 @@
         "type": "LineString",
         "coordinates": [
           [
-            -79.410264,
-            43.761532
+            -79.4105167,
+            43.7612845
           ],
           [
-            -79.385975,
-            43.766421
+            -79.3867165, 
+            43.7669115
           ],
           [
-            -79.376426,
-            43.767555
+            -79.3763285, 
+            43.7692490
           ],
           [
-            -79.367453,
-            43.768188
+            -79.36499,
+            43.771348
           ],
           [
-            -79.345316,
-            43.775565
+            -79.346584,
+            43.775547
           ]
         ]
       }
