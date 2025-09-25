@@ -90,7 +90,14 @@ export default function TorontoMap() {
             filter={['==', ['get', 'name'], 'Line 1']}
             paint={{
               'line-color': '#FFCA09',
-              'line-width': 4,
+              'line-width': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                5, 3,
+                10, 5,
+                16, 10
+              ],
               'line-opacity': 0.9,
             }}
             layout={{
@@ -107,7 +114,14 @@ export default function TorontoMap() {
             filter={['==', ['get', 'name'], 'Line 2']}
             paint={{
               'line-color': '#00A754',
-              'line-width': 4,
+              'line-width': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                5, 3,
+                10, 5,
+                16, 10
+              ],
               'line-opacity': 0.9,
             }}
             layout={{
@@ -124,7 +138,14 @@ export default function TorontoMap() {
             filter={['==', ['get', 'name'], 'Line 4']}
             paint={{
               'line-color': '#B51A79',
-              'line-width': 4,
+              'line-width': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                5, 3,
+                10, 5,
+                16, 10
+              ],
               'line-opacity': 0.9,
             }}
             layout={{
@@ -140,7 +161,14 @@ export default function TorontoMap() {
             id="station-points"
             type="circle"
             paint={{
-              'circle-radius': 4,
+              'circle-radius': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                5, 3,
+                10, 4,
+                16, 6
+              ],
               'circle-color': '#000000',
               'circle-stroke-width': 1,
               'circle-stroke-color': '#ffffff',
