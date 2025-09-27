@@ -130,15 +130,33 @@ export default function SchematicMap() {
         <rect width="100%" height="100%" fill="url(#grid)" />
 
         {/* Lines */}
-        {subwayLines.map((line) => (
-          <polyline
-            key={line.id}
-            points={line.stations.map((s) => `${tx(s.x)},${ty(s.y)}`).join(" ")}
-            stroke={line.color}
-            strokeWidth={line.thickness}
-            fill="none"
-          />
-        ))}
+        {subwayLines.map((line) => {
+        if (line.pathPoints) {
+          const d = line.pathPoints.map((p) => {
+            if (p.cmd === "M" || p.cmd === "L") {
+              return `${p.cmd} ${tx(p.x)},${ty(p.y)}`;
+            } else if (p.cmd === "Q") {
+              return `Q ${tx(p.cx!)},${ty(p.cy!)} ${tx(p.x)},${ty(p.y)}`;
+            }
+            return "";
+          }).join(" ");
+
+          return (
+            <path
+              key={line.id}
+              d={d}
+              stroke={line.color}
+              strokeWidth={line.thickness}
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              fill="none"
+            />
+          );
+        }
+        return null;
+      })}
+
+
 
         {/* Stations */}
         {subwayLines.flatMap((line) =>
@@ -149,25 +167,25 @@ export default function SchematicMap() {
               onClick={() => alert(`Clicked station: ${s.name}`)}
             >
               {s.type === "normal" ? (
-                <circle cx={tx(s.x)} cy={ty(s.y)} r={6} fill="white" stroke="black" strokeWidth={2} />
+                <circle cx={tx(s.x)} cy={ty(s.y)} r={4} fill="white" stroke="black" strokeWidth={0} />
               ) : (
                 <>
                   <rect
-                    x={tx(s.x) - 10}
-                    y={ty(s.y) - 10}
-                    width={20}
-                    height={20}
+                    x={tx(s.x) - 5}
+                    y={ty(s.y) - 5}
+                    width={10}
+                    height={10}
                     fill="grey"
-                    rx={3}
-                    ry={3}
+                    rx={0}
+                    ry={0}
                   />
                   <circle
                     cx={tx(s.x)}
                     cy={ty(s.y)}
-                    r={5}
+                    r={2}
                     fill="white"
                     stroke="black"
-                    strokeWidth={2}
+                    strokeWidth={0}
                   />
                 </>
               )}
