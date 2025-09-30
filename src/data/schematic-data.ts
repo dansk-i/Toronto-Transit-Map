@@ -21,7 +21,7 @@ export const subwayLines = [
       { id: "oldMill", name: "Old Mill", x: -500, y: 25, type: "normal" },
       { id: "highPark", name: "High Park", x: -450, y: 25, type: "normal" },
       { id: "keele", name: "Keele", x: -400, y: 25, type: "normal" },
-      { id: "dundasWest", name: "Dundas West", x: -350, y: 25, type: "normal" },
+      { id: "dundasWest", name: "Dundas West", x: -350, y: 25, type: "interchange" },
       { id: "lansdowne", name: "Lansdowne", x: -300, y: 25, type: "normal" },
       { id: "dufferin", name: "Dufferin", x: -250, y: 25, type: "normal" },
       { id: "ossington", name: "Ossington", x: -200, y: 25, type: "normal" },
@@ -106,6 +106,24 @@ export const subwayLines = [
       { id: "pioneerVillage", name: "Pioneer Village", x: -300, y: -337.5, type: "normal" },
       { id: "highway407", name: "Highway 407", x: -325, y: -370, type: "normal" },
       { id: "vaughan", name: "Vaughan Metropolitan Centre", x: -325, y: -400, type: "normal" }
+    ]
+  },
+  // LINE 4 — Sheppard
+  {
+    id: "line4",
+    name: "Sheppard",
+    color: "#b10072",
+    thickness: 10,
+    pathPoints: [
+      { cmd: "M", x: 25, y: -235 },
+      { cmd: "L", x: 225, y: -235 }
+    ],
+    stations: [
+      { id: "sheppardYonge", name: "Sheppard–Yonge", x: 25, y: -235, type: "interchange" },
+      { id: "bayview", name: "Bayview", x: 75, y: -235, type: "normal" },
+      { id: "bessarion", name: "Bessarion", x: 125, y: -235, type: "normal" },
+      { id: "leslie", name: "Leslie", x: 175, y: -235, type: "interchange " },
+      { id: "donMills", name: "Don Mills", x: 225, y: -235, type: "normal" }
     ]
   }
 ];

@@ -1,5 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import { subwayLines } from "../data/schematic-data";
+import { constructionLines } from "../data/schematic-construction";
+import { proposedLines } from "../data/schematic-proposed";
+
+// Define a helper type for path points
+type PathPoint = {
+  cmd: "M" | "L" | "Q";
+  x: number;
+  y: number;
+  cx?: number;
+  cy?: number;
+};
 
 export default function SchematicMap() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -8,6 +19,9 @@ export default function SchematicMap() {
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
   const [lastPos, setLastPos] = useState<{ x: number; y: number } | null>(null);
+
+  const [showConstruction, setShowConstruction] = useState(true);
+  const [showProposed, setShowProposed] = useState(true);
 
   const MAP_W = window.innerWidth;
   const MAP_H = window.innerHeight;
@@ -96,9 +110,16 @@ export default function SchematicMap() {
     setLastPos(null);
   };
 
-  // Helper: translate station coords to screen space
+  // Translate station coords to screen space
   const tx = (x: number) => x + centerX;
   const ty = (y: number) => y + centerY;
+
+  // Merge active lines
+  const activeLines = [
+    ...subwayLines,
+    ...(showConstruction ? constructionLines : []),
+    ...(showProposed ? proposedLines : []),
+  ];
 
   return (
     <div
@@ -109,6 +130,43 @@ export default function SchematicMap() {
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
     >
+      {/* Switch toggles */}
+      <div className="absolute top-4 left-4 z-10 flex flex-col gap-4">
+        {/* Construction toggle */}
+        <label className="flex items-center gap-2 text-white">
+          <span>Construction</span>
+          <button
+            onClick={() => setShowConstruction((p) => !p)}
+            className={`relative w-12 h-6 rounded-full transition-colors ${
+              showConstruction ? "bg-green-500" : "bg-gray-600"
+            }`}
+          >
+            <span
+              className={`absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow transform transition-transform ${
+                showConstruction ? "translate-x-6" : "translate-x-0"
+              }`}
+            />
+          </button>
+        </label>
+
+        {/* Proposed toggle */}
+        <label className="flex items-center gap-2 text-white">
+          <span>Proposed</span>
+          <button
+            onClick={() => setShowProposed((p) => !p)}
+            className={`relative w-12 h-6 rounded-full transition-colors ${
+              showProposed ? "bg-cyan-500" : "bg-gray-600"
+            }`}
+          >
+            <span
+              className={`absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow transform transition-transform ${
+                showProposed ? "translate-x-6" : "translate-x-0"
+              }`}
+            />
+          </button>
+        </label>
+      </div>
+
       <svg
         viewBox={`0 0 ${MAP_W} ${MAP_H}`}
         width={MAP_W}
@@ -130,36 +188,36 @@ export default function SchematicMap() {
         <rect width="100%" height="100%" fill="url(#grid)" />
 
         {/* Lines */}
-        {subwayLines.map((line) => {
-        if (line.pathPoints) {
-          const d = line.pathPoints.map((p) => {
-            if (p.cmd === "M" || p.cmd === "L") {
-              return `${p.cmd} ${tx(p.x)},${ty(p.y)}`;
-            } else if (p.cmd === "Q") {
-              return `Q ${tx(p.cx!)},${ty(p.cy!)} ${tx(p.x)},${ty(p.y)}`;
-            }
-            return "";
-          }).join(" ");
+        {activeLines.map((line) => {
+          if (line.pathPoints) {
+            const d = (line.pathPoints as PathPoint[])
+              .map((p) => {
+                if (p.cmd === "M" || p.cmd === "L") {
+                  return `${p.cmd} ${tx(p.x)},${ty(p.y)}`;
+                } else if (p.cmd === "Q" && p.cx !== undefined && p.cy !== undefined) {
+                  return `Q ${tx(p.cx)},${ty(p.cy)} ${tx(p.x)},${ty(p.y)}`;
+                }
+                return "";
+              })
+              .join(" ");
 
-          return (
-            <path
-              key={line.id}
-              d={d}
-              stroke={line.color}
-              strokeWidth={line.thickness}
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              fill="none"
-            />
-          );
-        }
-        return null;
-      })}
-
-
+            return (
+              <path
+                key={line.id}
+                d={d}
+                stroke={line.color}
+                strokeWidth={line.thickness}
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                fill="none"
+              />
+            );
+          }
+          return null;
+        })}
 
         {/* Stations */}
-        {subwayLines.flatMap((line) =>
+        {activeLines.flatMap((line) =>
           line.stations.map((s) => (
             <g
               key={`${line.id}-${s.id}`}
@@ -167,7 +225,14 @@ export default function SchematicMap() {
               onClick={() => alert(`Clicked station: ${s.name}`)}
             >
               {s.type === "normal" ? (
-                <circle cx={tx(s.x)} cy={ty(s.y)} r={4} fill="white" stroke="black" strokeWidth={0} />
+                <circle
+                  cx={tx(s.x)}
+                  cy={ty(s.y)}
+                  r={4}
+                  fill="white"
+                  stroke="black"
+                  strokeWidth={0}
+                />
               ) : (
                 <>
                   <rect
