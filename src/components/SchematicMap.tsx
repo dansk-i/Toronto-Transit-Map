@@ -230,24 +230,24 @@ export default function SchematicMap() {
                   cy={ty(s.y)}
                   r={4}
                   fill="white"
-                  stroke="black"
-                  strokeWidth={0}
+                  stroke={line.color}
+                  strokeWidth={1.25}
                 />
               ) : (
                 <>
                   <rect
-                    x={tx(s.x) - 5}
-                    y={ty(s.y) - 5}
-                    width={10}
-                    height={10}
+                    x={tx(s.x) - 5.25}
+                    y={ty(s.y) - 5.25}
+                    width={10.5}
+                    height={10.5}
                     fill="grey"
-                    rx={0}
-                    ry={0}
+                    rx={1}
+                    ry={1}
                   />
                   <circle
                     cx={tx(s.x)}
                     cy={ty(s.y)}
-                    r={2}
+                    r={2.25}
                     fill="white"
                     stroke="black"
                     strokeWidth={0}
