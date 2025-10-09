@@ -8,12 +8,12 @@ export const constructionLines = [
     pathPoints: [
       { cmd: "M", x: 500, y: -100 }, // Kennedy 
       { cmd: "L", x: 500, y: -110 },
-      { cmd: "L", x: 575, y: -150 }, 
+      { cmd: "L", x: 575, y: -175 }, 
       { cmd: "L", x: 575, y: -235 }
     ],
     stations: [
       { id: "kennedy", name: "Kennedy", x: 500, y: -100, type: "interchange" },
-      { id: "lawrenceEast", name: "Lawrence East", x: 537.5, y: -130, type: "normal" },
+      { id: "lawrenceEast", name: "Lawrence East", x: 537.5, y: -142.5, type: "normal" },
       { id: "scarboroughCentre", name: "Scarborough Centre", x: 575, y: -200, type: "normal" },
       { id: "sheppardEast", name: "Sheppard East", x: 575, y: -235, type: "normal" }
     ],
@@ -74,6 +74,10 @@ export const constructionLines = [
       { id: "riverside", name: "Riverside-Leslieville", x: 200, y: 135, type: "normal" },
       { id: "gerrard", name: "Gerrard", x: 200, y: 87.5, type: "normal" },
       { id: "pape", name: "Pape", x: 200, y: 25, type: "interchange" },
+      { id: "cosburn", name: "Cosburn", x: 200, y: -15, type: "normal" },
+      { id: "thorncliffe", name: "Thorncliffe Park", x: 212.5, y: -55, type: "normal" },
+      { id: "flemingdon", name: "Flemingdon Park", x: 225, y: -80, type: "normal" },
+      { id: "donValley", name: "Don Valley", x: 225, y: -100, type: "interchange" }
     ],
   },
   // Eglinton Crosstown
@@ -83,32 +87,32 @@ export const constructionLines = [
     color: "#f27f30",
     thickness: 10,
     pathPoints: [
-      { cmd: "M", x: -600, y: -100 }, // Renforth
+      { cmd: "M", x: -500, y: -100 }, // Renforth
       { cmd: "L", x: 160, y: -100 }
       
     ],
     stations: [
-      { id: "renforth", name: "Renforth", x: -600, y: -100, type: "normal" },
-      { id: "martinGrove", name: "Martin Grove", x: -575, y: -100, type: "normal" },
-      { id: "kipling", name: "Kipling", x: -550, y: -100, type: "normal" },
-      { id: "islington", name: "Islington", x: -525, y: -100, type: "normal" },
-      { id: "royalYork", name: "Royal York", x: -500, y: -100, type: "normal" },
-      { id: "scarlett", name: "Scarlett", x: -475, y: -100, type: "normal" }, 
-      { id: "jane", name: "Jane", x: -450, y: -100, type: "normal" },
-      { id: "mountDennis", name: "Mount Dennis", x: -400, y: -100, type: "interchange" },
-      { id: "keelesdale", name: "Keelesdale", x: -350, y: -100, type: "normal" },
-      { id: "caledonia", name: "Caledonia", x: -200, y: -100, type: "normal" },
-      { id: "fairbank", name: "Fairbank", x: -175, y: -100, type: "normal" },
-      { id: "oakwood", name: "Oakwood", x: -150, y: -100, type: "normal" },
+      { id: "renforth", name: "Renforth", x: -500, y: -100, type: "normal" },
+      { id: "martinGrove", name: "Martin Grove", x: -462.5, y: -100, type: "normal" },
+      { id: "kipling", name: "Kipling", x: -437.5, y: -100, type: "normal" },
+      { id: "islington", name: "Islington", x: -412.5, y: -100, type: "normal" },
+      { id: "royalYork", name: "Royal York", x: -387.5, y: -100, type: "normal" },
+      { id: "scarlett", name: "Scarlett", x: -362.5, y: -100, type: "normal" }, 
+      { id: "jane", name: "Jane", x: -337.5, y: -100, type: "normal" },
+      { id: "mountDennis", name: "Mount Dennis", x: -300, y: -100, type: "interchange" },
+      { id: "keelesdale", name: "Keelesdale", x: -262.5, y: -100, type: "normal" },
+      { id: "caledonia", name: "Caledonia", x: -225, y: -100, type: "normal" },
+      { id: "fairbank", name: "Fairbank", x: -187.5, y: -100, type: "normal" },
+      { id: "oakwood", name: "Oakwood", x: -162.5, y: -100, type: "normal" },
 
       { id: "cedarvale", name: "Cedarvale", x: -125, y: -100, type: "interchange" },
       { id: "forestHill", name: "Forest Hill", x: -87.5, y: -100, type: "normal" },
       { id: "chaplin", name: "Chaplin", x: -50, y: -100, type: "normal" },
       { id: "avenue", name: "Avenue", x: -12.5, y: -100, type: "normal" },
       { id: "eglinton", name: "Eglinton", x: 25, y: -100, type: "interchange" },
-      { id: "mountPleasant", name: "Mount Pleasant", x: 75, y: -100, type: "normal" },
-      { id: "leaside", name: "Leaside", x: 100, y: -100, type: "normal" },
-      { id: "laird", name: "Laird", x: 125, y: -100, type: "normal" },
+      { id: "mountPleasant", name: "Mount Pleasant", x: 87.5, y: -100, type: "normal" },
+      { id: "leaside", name: "Leaside", x: 112.5, y: -100, type: "normal" },
+      { id: "laird", name: "Laird", x: 137.5, y: -100, type: "normal" },
     ],
   },
   {
@@ -118,20 +122,25 @@ export const constructionLines = [
     thickness: 4,
     pathPoints: [
       { cmd: "M", x: 160, y: -100 }, // continues from underground
+      { cmd: "L", x: 175, y: -100 },
+      { cmd: "L", x: 163, y: -102 },
+      { cmd: "L", x: 163, y: -98},
+      { cmd: "L", x: 175, y: -100 },
       { cmd: "L", x: 500, y: -100 },
+      
     ],
     stations: [
-      { id: "sunnybrookPark", name: "Sunnybrook Park", x: 175, y: -100, type: "normal" },
+      { id: "sunnybrookPark", name: "Sunnybrook Park", x: 187.5, y: -100, type: "normal" },
       { id: "donValley", name: "Don Valley", x: 225, y: -100, type: "interchange" },
-      { id: "agaKhan", name: "Aga Khan Park & Museum ", x: 250, y: -100, type: "normal" },
-      { id: "wynford", name: "Wynford", x: 275, y: -100, type: "normal" },
-      { id: "sloane", name: "Sloane", x: 300, y: -100, type: "normal" },
-      { id: "oConnor", name: "O'Connor", x: 350, y: -100, type: "normal" },
-      { id: "pharmacy", name: "Pharmacy", x: 375, y: -100, type: "normal" },
-      { id: "hakimiLebovic", name: "Hakimi Lebovic", x: 400, y: -100, type: "normal" },
-      { id: "goldenMile", name: "Golden Mile", x: 425, y: -100, type: "normal" },
-      { id: "birchmount", name: "Birchmount", x: 450, y: -100, type: "normal" },
-      { id: "ionview", name: "Ionview", x: 475, y: -100, type: "normal" },
+      { id: "agaKhan", name: "Aga Khan Park & Museum ", x: 262.5, y: -100, type: "normal" },
+      { id: "wynford", name: "Wynford", x: 287.5, y: -100, type: "normal" },
+      { id: "sloane", name: "Sloane", x: 312.5, y: -100, type: "normal" },
+      { id: "oConnor", name: "O'Connor", x: 337.5, y: -100, type: "normal" },
+      { id: "pharmacy", name: "Pharmacy", x: 362.5, y: -100, type: "normal" },
+      { id: "hakimiLebovic", name: "Hakimi Lebovic", x: 387.5, y: -100, type: "normal" },
+      { id: "goldenMile", name: "Golden Mile", x: 412.5, y: -100, type: "normal" },
+      { id: "birchmount", name: "Birchmount", x: 437.5, y: -100, type: "normal" },
+      { id: "ionview", name: "Ionview", x: 462.5, y: -100, type: "normal" },
       { id: "kennedy", name: "Kennedy", x: 500, y: -100, type: "interchange" }
     ],
   },
