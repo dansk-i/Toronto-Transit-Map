@@ -89,7 +89,11 @@ export const subwayLines = [
       { id: "dundas", name: "Dundas", x: 25, y: 95, type: "normal" },
       { id: "queen", name: "Queen", x: 25, y: 125, type: "normal" },
       { id: "king", name: "King", x: 25, y: 162.5, type: "normal" },
+      
+
       { id: "union", name: "Union", x: 0, y: 200, type: "interchange" },
+
+
       { id: "stAndrew", name: "St. Andrew", x: -25, y: 162.5, type: "normal" },
       { id: "osgoode", name: "Osgoode", x: -25, y: 125, type: "normal" },
       { id: "stPatrick", name: "St. Patrick", x: -25, y: 95, type: "normal" },

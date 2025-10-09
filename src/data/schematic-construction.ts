@@ -46,9 +46,9 @@ export const constructionLines = [
     color: "#189cdb",
     thickness: 10,
     pathPoints: [
-      { cmd: "M", x: -200, y: 225}, // Exhibition
-      { cmd: "L", x: -150, y: 225 },
-      { cmd: "L", x: -125, y: 200 },
+      { cmd: "M", x: -200, y: 230}, // Exhibition
+      { cmd: "L", x: -170, y: 230 },
+      { cmd: "L", x: -125, y: 190 },
       { cmd: "L", x: -125, y: 150 },
       { cmd: "L", x: -100, y: 125},
       { cmd: "L", x: 100, y: 125},
@@ -63,7 +63,7 @@ export const constructionLines = [
       
     ],
     stations: [
-      { id: "exhibition", name: "Exhibition", x: -200, y: 225, type: "interchange" },
+      { id: "exhibition", name: "Exhibition", x: -200, y: 230, type: "interchange" },
       { id: "kingBathurst", name: "King-Bathurst", x: -125, y: 162.5, type: "normal" },
       { id: "queenSpadina", name: "Queen-Spadina", x: -75, y: 125, type: "normal" },
       { id: "osgoode", name: "Osgoode", x: -25, y: 125, type: "interchange" },
@@ -150,24 +150,20 @@ export const constructionLines = [
     color: "#f27f30",
     thickness: 8,
     pathPoints: [
-      { cmd: "M", x: -10, y: 208 },
-      { cmd: "L", x: 10, y: 208 },
+      // { cmd: "M", x: -10, y: 208 },
+      // { cmd: "L", x: 10, y: 208 },
 
-      { cmd: "L", x: 10, y: 216 },
-      { cmd: "L", x: -10, y: 216 },
+      // { cmd: "L", x: 10, y: 216 },
+      // { cmd: "L", x: -10, y: 216 },
 
-      { cmd: "L", x: -10, y: 224 },
-      { cmd: "L", x: 10, y: 224 },
+      // { cmd: "L", x: -10, y: 224 },
+      // { cmd: "L", x: 10, y: 224 },
 
-      { cmd: "L", x: 10, y: 232 },
-      { cmd: "L", x: -10, y: 232 },
+      // { cmd: "L", x: 10, y: 232 },
+      // { cmd: "L", x: -10, y: 232 },
     ],
     stations: [
-      { id: "union", name: "Union", x: 0, y: 208, type: "interchange" },
-      { id: "union", name: "Union", x: 0, y: 216, type: "interchange" },
-      { id: "union", name: "Union", x: 0, y: 224, type: "interchange" },
-      { id: "union", name: "Union", x: 0, y: 232, type: "interchange" },
-      { id: "union", name: "Union", x: 0, y: 240, type: "interchange" },
+     
       
     ],
   },

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { subwayLines } from "../data/schematic-data";
 import { constructionLines } from "../data/schematic-construction";
 import { proposedLines } from "../data/schematic-proposed";
+import { goLines } from "../data/go-schematic-data";
 
 // Define a helper type for path points
 type PathPoint = {
@@ -22,6 +23,7 @@ export default function SchematicMap() {
 
   const [showConstruction, setShowConstruction] = useState(true);
   const [showProposed, setShowProposed] = useState(true);
+  const [showGO, setShowGO] = useState(true);
 
   const MAP_W = window.innerWidth;
   const MAP_H = window.innerHeight;
@@ -116,6 +118,7 @@ export default function SchematicMap() {
 
   // Merge active lines
   const activeLines = [
+    ...(showGO ? goLines : []),
     ...subwayLines,
     ...(showConstruction ? constructionLines : []),
     ...(showProposed ? proposedLines : []),
@@ -165,7 +168,26 @@ export default function SchematicMap() {
             />
           </button>
         </label>
+
+        {/* GO toggle */}
+        <label className="flex items-center gap-2 text-white">
+          <span>GO Transit</span>
+          <button
+            onClick={() => setShowGO((p) => !p)}
+            className={`relative w-12 h-6 rounded-full transition-colors ${
+              showGO ? "bg-emerald-500" : "bg-gray-600"
+            }`}
+          >
+            <span
+              className={`absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow transform transition-transform ${
+                showGO ? "translate-x-6" : "translate-x-0"
+              }`}
+            />
+          </button>
+        </label>
+
       </div>
+      
 
       <svg
         viewBox={`0 0 ${MAP_W} ${MAP_H}`}
