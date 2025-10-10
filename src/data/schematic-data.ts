@@ -22,12 +22,12 @@ export const subwayLines = [
       { id: "highPark", name: "High Park", x: -350, y: 25, type: "normal" },
       { id: "keele", name: "Keele", x: -325, y: 25, type: "normal" },
 
-      { id: "dundasWest", name: "Dundas West", x: -275, y: 25, type: "interchange" },
-      { id: "lansdowne", name: "Lansdowne", x: -250, y: 25, type: "normal" },
-      { id: "dufferin", name: "Dufferin", x: -200, y: 25, type: "normal" },
-      { id: "ossington", name: "Ossington", x: -175, y: 25, type: "normal" },
-      { id: "christie", name: "Christie", x: -150, y: 25, type: "normal" },
-      { id: "bathurst", name: "Bathurst", x: -125, y: 25, type: "normal" },
+      { id: "dundasWest", name: "Dundas West", x: -250, y: 25, type: "interchange" },
+      { id: "lansdowne", name: "Lansdowne", x: -225, y: 25, type: "normal" },
+      { id: "dufferin", name: "Dufferin", x: -175, y: 25, type: "normal" },
+      { id: "ossington", name: "Ossington", x: -150, y: 25, type: "normal" },
+      { id: "christie", name: "Christie", x: -125, y: 25, type: "normal" },
+      { id: "bathurst", name: "Bathurst", x: -100, y: 25, type: "normal" },
 
       { id: "spadina", name: "Spadina", x: -50, y: 25, type: "interchange" },
       { id: "stGeorge", name: "St. George", x: -25, y: 25, type: "interchange" },
@@ -89,7 +89,7 @@ export const subwayLines = [
       { id: "dundas", name: "Dundas", x: 25, y: 95, type: "normal" },
       { id: "queen", name: "Queen", x: 25, y: 125, type: "normal" },
       { id: "king", name: "King", x: 25, y: 162.5, type: "normal" },
-      
+
 
       { id: "union", name: "Union", x: 0, y: 200, type: "interchange" },
 
@@ -132,7 +132,7 @@ export const subwayLines = [
       { id: "sheppardYonge", name: "Sheppard–Yonge", x: 25, y: -235, type: "interchange" },
       { id: "bayview", name: "Bayview", x: 75, y: -235, type: "normal" },
       { id: "bessarion", name: "Bessarion", x: 125, y: -235, type: "normal" },
-      { id: "leslie", name: "Leslie", x: 175, y: -235, type: "interchange " },
+      { id: "leslie", name: "Leslie", x: 175, y: -235, type: "interchange" },
       { id: "donMills", name: "Don Mills", x: 225, y: -235, type: "normal" }
     ]
   }

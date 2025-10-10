@@ -46,9 +46,9 @@ export const constructionLines = [
     color: "#189cdb",
     thickness: 10,
     pathPoints: [
-      { cmd: "M", x: -200, y: 230}, // Exhibition
-      { cmd: "L", x: -170, y: 230 },
-      { cmd: "L", x: -125, y: 190 },
+      { cmd: "M", x: -187.5, y: 232.5}, // Exhibition
+      { cmd: "L", x: -155, y: 232.5 },
+      { cmd: "L", x: -125, y: 200 },
       { cmd: "L", x: -125, y: 150 },
       { cmd: "L", x: -100, y: 125},
       { cmd: "L", x: 100, y: 125},
@@ -63,7 +63,7 @@ export const constructionLines = [
       
     ],
     stations: [
-      { id: "exhibition", name: "Exhibition", x: -200, y: 230, type: "interchange" },
+      { id: "exhibition", name: "Exhibition", x: -187.5, y: 232.5, type: "interchange" },
       { id: "kingBathurst", name: "King-Bathurst", x: -125, y: 162.5, type: "normal" },
       { id: "queenSpadina", name: "Queen-Spadina", x: -75, y: 125, type: "normal" },
       { id: "osgoode", name: "Osgoode", x: -25, y: 125, type: "interchange" },

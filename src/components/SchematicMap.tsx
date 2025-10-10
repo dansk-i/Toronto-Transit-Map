@@ -240,44 +240,99 @@ export default function SchematicMap() {
 
         {/* Stations */}
         {activeLines.flatMap((line) =>
-          line.stations.map((s) => (
-            <g
-              key={`${line.id}-${s.id}`}
-              className="cursor-pointer"
-              onClick={() => alert(`Clicked station: ${s.name}`)}
-            >
-              {s.type === "normal" ? (
-                <circle
-                  cx={tx(s.x)}
-                  cy={ty(s.y)}
-                  r={4}
-                  fill="white"
-                  stroke={line.color}
-                  strokeWidth={1.25}
-                />
-              ) : (
-                <>
+          line.stations.map((s) => {
+            const cx = tx(s.x);
+            const cy = ty(s.y);
+
+            if (s.type === "normal") {
+              return (
+                <g
+                  key={`${line.id}-${s.id}`}
+                  className="cursor-pointer"
+                  onClick={() => alert(`Clicked station: ${s.name}`)}
+                >
+                  <circle
+                    cx={cx}
+                    cy={cy}
+                    r={4}
+                    fill="white"
+                    stroke={line.color}
+                    strokeWidth={1.25}
+                  />
+                </g>
+              );
+            }
+
+            if (s.type === "interchange") {
+              return (
+                <g
+                  key={`${line.id}-${s.id}`}
+                  className="cursor-pointer"
+                  onClick={() => alert(`Clicked station: ${s.name}`)}
+                >
                   <rect
-                    x={tx(s.x) - 5.25}
-                    y={ty(s.y) - 5.25}
+                    x={cx - 5.25}
+                    y={cy - 5.25}
                     width={10.5}
                     height={10.5}
                     fill="grey"
                     rx={1}
                     ry={1}
                   />
-                  <circle
-                    cx={tx(s.x)}
-                    cy={ty(s.y)}
-                    r={2.25}
-                    fill="white"
-                    stroke="black"
-                    strokeWidth={0}
+                  <circle cx={cx} cy={cy} r={2.25} fill="white" />
+                </g>
+              );
+            }
+
+            if (s.type === "interchange-sm") {
+              return (
+                <g
+                  key={`${line.id}-${s.id}`}
+                  className="cursor-pointer"
+                  onClick={() => alert(`Clicked station: ${s.name}`)}
+                >
+                  <rect
+                    x={cx - 5}
+                    y={cy - 5}
+                    width={10}
+                    height={10}
+                    fill="grey"
+                    rx={3}
+                    ry={3}
                   />
-                </>
-              )}
-            </g>
-          ))
+                  <circle cx={cx} cy={cy} r={2.25} fill="white" />
+                </g>
+              );
+            }
+
+            if (s.type === "union") {
+              return (
+                <g
+                  key={`${line.id}-${s.id}`}
+                  className="cursor-pointer"
+                  onClick={() => alert(`Clicked station: ${s.name}`)}
+                >
+                  <rect
+                    x={cx - 5}
+                    y={cy - 5}
+                    width={10}
+                    height={52.5}
+                    fill="grey"
+                    rx={3}
+                    ry={3}
+                  />
+                  <circle cx={cx} cy={cy + 1} r={2.25} fill="white" />
+                  <circle cx={cx} cy={cy + 10} r={2.25} fill="white" />
+                  <circle cx={cx} cy={cy + 18} r={2.25} fill="white" />
+                  <circle cx={cx} cy={cy + 26} r={2.25} fill="white" />
+                  <circle cx={cx} cy={cy + 34} r={2.25} fill="white" />
+                  <circle cx={cx} cy={cy + 42} r={2.25} fill="white" />
+                </g>
+              );
+            }
+
+            return null;
+          })
         )}
       </svg>
     </div>
