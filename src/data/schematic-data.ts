@@ -22,7 +22,7 @@ export const subwayLines = [
       { id: "highPark", name: "High Park", x: -350, y: 25, type: "normal" },
       { id: "keele", name: "Keele", x: -325, y: 25, type: "normal" },
 
-      { id: "dundasWest", name: "Dundas West", x: -250, y: 25, type: "interchange" },
+      { id: "dundasWest", name: "Dundas West", x: -250, y: 25, type: "normal" },
       { id: "lansdowne", name: "Lansdowne", x: -225, y: 25, type: "normal" },
       { id: "dufferin", name: "Dufferin", x: -175, y: 25, type: "normal" },
       { id: "ossington", name: "Ossington", x: -150, y: 25, type: "normal" },

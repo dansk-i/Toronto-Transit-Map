@@ -63,7 +63,7 @@ export const constructionLines = [
       
     ],
     stations: [
-      { id: "exhibition", name: "Exhibition", x: -187.5, y: 232.5, type: "interchange" },
+      { id: "exhibition", name: "Exhibition", x: -187.5, y: 232.5, type: "interchange-sm" },
       { id: "kingBathurst", name: "King-Bathurst", x: -125, y: 162.5, type: "normal" },
       { id: "queenSpadina", name: "Queen-Spadina", x: -75, y: 125, type: "normal" },
       { id: "osgoode", name: "Osgoode", x: -25, y: 125, type: "interchange" },
@@ -87,19 +87,19 @@ export const constructionLines = [
     color: "#f27f30",
     thickness: 10,
     pathPoints: [
-      { cmd: "M", x: -500, y: -100 }, // Renforth
+      { cmd: "M", x: -525, y: -100 }, // Renforth
       { cmd: "L", x: 160, y: -100 }
       
     ],
     stations: [
-      { id: "renforth", name: "Renforth", x: -500, y: -100, type: "normal" },
-      { id: "martinGrove", name: "Martin Grove", x: -462.5, y: -100, type: "normal" },
-      { id: "kipling", name: "Kipling", x: -437.5, y: -100, type: "normal" },
-      { id: "islington", name: "Islington", x: -412.5, y: -100, type: "normal" },
-      { id: "royalYork", name: "Royal York", x: -387.5, y: -100, type: "normal" },
-      { id: "scarlett", name: "Scarlett", x: -362.5, y: -100, type: "normal" }, 
-      { id: "jane", name: "Jane", x: -337.5, y: -100, type: "normal" },
-      { id: "mountDennis", name: "Mount Dennis", x: -300, y: -100, type: "interchange" },
+      { id: "renforth", name: "Renforth", x: -525, y: -100, type: "normal" },
+      { id: "martinGrove", name: "Martin Grove", x: -487.5, y: -100, type: "normal" },
+      { id: "kipling", name: "Kipling", x: -462.5, y: -100, type: "normal" },
+      { id: "islington", name: "Islington", x: -437.5, y: -100, type: "normal" },
+      { id: "royalYork", name: "Royal York", x: -412.5, y: -100, type: "normal" },
+      { id: "scarlett", name: "Scarlett", x: -387.5, y: -100, type: "normal" }, 
+      { id: "jane", name: "Jane", x: -362.5, y: -100, type: "normal" },
+      { id: "mountDennis", name: "Mount Dennis", x: -300, y: -100, type: "normal" },
       { id: "keelesdale", name: "Keelesdale", x: -262.5, y: -100, type: "normal" },
       { id: "caledonia", name: "Caledonia", x: -225, y: -100, type: "normal" },
       { id: "fairbank", name: "Fairbank", x: -187.5, y: -100, type: "normal" },
