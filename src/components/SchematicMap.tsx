@@ -11,6 +11,7 @@ type PathPoint = {
   y: number;
   cx?: number;
   cy?: number;
+  svc?: "rapid" | "limited" | "peakOnly";
 };
 
 export default function SchematicMap() {
@@ -31,7 +32,7 @@ export default function SchematicMap() {
   const Z_MIN = 1;
   const Z_MAX = 3;
 
-  // Screen center (we shift all relative coords here)
+  // Screen center 
   const centerX = MAP_W / 2;
   const centerY = MAP_H / 2;
 
@@ -116,7 +117,116 @@ export default function SchematicMap() {
   const tx = (x: number) => x + centerX;
   const ty = (y: number) => y + centerY;
 
-  // Identify GO lines
+  // Service-styling 
+    const MAP_BG = "#000"; 
+
+    type Svc = "rapid" | "limited" | "peakOnly"; 
+
+    function buildServiceSegments(points: PathPoint[], tx: (n:number)=>number, ty:(n:number)=>number) {
+      type Svc = "rapid" | "limited" | "peakOnly";
+      const segs: { d: string; svc: Svc }[] = [];
+      if (!points.length) return segs;
+
+      const toAbs = (x:number, y:number) => `${tx(x)},${ty(y)}`;
+
+      // Start path at the first point
+      let d = `M ${toAbs(points[0].x, points[0].y)} `;
+      let currentSvc: Svc = (points[0].svc as Svc) ?? "rapid";
+
+      const flush = () => {
+        if (d.trim()) segs.push({ d: d.trim(), svc: currentSvc });
+        d = "";
+      };
+
+      for (let i = 1; i < points.length; i++) {
+        const prev = points[i - 1];
+        const curr = points[i];
+        const edgeSvc: Svc = (prev.svc as Svc) ?? currentSvc;
+
+        if (edgeSvc !== currentSvc) {
+          flush();
+          currentSvc = edgeSvc;
+          d = `M ${toAbs(prev.x, prev.y)} `;
+        }
+
+        // Draw the edge prev to curr with the current style
+        if (curr.cmd === "Q" && curr.cx !== undefined && curr.cy !== undefined) {
+          d += `Q ${toAbs(curr.cx, curr.cy)} ${toAbs(curr.x, curr.y)} `;
+        } else {
+          d += `L ${toAbs(curr.x, curr.y)} `;
+        }
+      }
+
+      flush();
+      return segs;
+    }
+
+
+    function renderGoStrokeBySvc(svc: Svc, color: string, thickness: number, d: string, key: string) {
+      switch (svc) {
+        case "limited":
+          // Hollow 
+          return (
+            <g key={key}>
+              <path
+                d={d}
+                stroke={color}
+                strokeWidth={thickness}
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                fill="none"
+              />
+              <path
+                d={d}
+                stroke={MAP_BG}
+                strokeWidth={Math.max(1, thickness - 3)} // tweak inner gap by changing 3
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                fill="none"
+              />
+            </g>
+          );
+        case "peakOnly":
+          // Dashed
+          return (
+            <path
+              key={key}
+              d={d}
+              stroke={color}
+              strokeWidth={thickness}
+              strokeLinejoin="round"
+              strokeLinecap="butt"
+              strokeDasharray="4 4" // tweak pattern
+              fill="none"
+            />
+          );
+        case "rapid":
+        default:
+          // Solid
+          return (
+            <path
+              key={key}
+              d={d}
+              stroke={color}
+              strokeWidth={thickness}
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              fill="none"
+            />
+          );
+      }
+    }
+// ---------------------------------------------------------------------------
+
+
+  // Map each line object
+  const srcByRef = new WeakMap<object, "go" | "subway" | "construction" | "proposed">();
+
+  goLines.forEach(l => srcByRef.set(l, "go"));
+  subwayLines.forEach(l => srcByRef.set(l, "subway"));
+  constructionLines.forEach(l => srcByRef.set(l, "construction"));
+  proposedLines.forEach(l => srcByRef.set(l, "proposed"));
+
   const goIds = new Set(goLines.map(l => l.id));
 
   // Merge active lines
@@ -226,9 +336,25 @@ export default function SchematicMap() {
               })
               .join(" ");
 
+            if (srcByRef.get(line) === "go") {
+              const segs = buildServiceSegments(line.pathPoints as PathPoint[], tx, ty);
+              return (
+                <>
+                  {segs.map((seg, idx) =>
+                    renderGoStrokeBySvc(
+                      seg.svc,
+                      line.color,
+                      line.thickness,
+                      seg.d,
+                      `${srcByRef.get(line) ?? "unknown"}-${line.id}-seg-${idx}`
+                    )
+                  )}
+                </>
+              );
+            }
             return (
               <path
-                key={line.id}
+                key={`${srcByRef.get(line) ?? "unknown"}-${line.id}`}
                 d={d}
                 stroke={line.color}
                 strokeWidth={line.thickness}
@@ -252,7 +378,7 @@ export default function SchematicMap() {
               if (s.type === "normal") {
                 return (
                   <g
-                    key={`${line.id}-${s.id}`}
+                    key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
                     className="cursor-pointer"
                     onClick={() => alert(`Clicked station: ${s.name}`)}
                   >
@@ -264,7 +390,7 @@ export default function SchematicMap() {
               if (s.type === "interchange") {
                 return (
                   <g
-                    key={`${line.id}-${s.id}`}
+                    key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
                     className="cursor-pointer"
                     onClick={() => alert(`Clicked station: ${s.name}`)}
                   >
@@ -277,7 +403,7 @@ export default function SchematicMap() {
               if (s.type === "interchange-sm") {
                 return (
                   <g
-                    key={`${line.id}-${s.id}`}
+                    key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
                     className="cursor-pointer"
                     onClick={() => alert(`Clicked station: ${s.name}`)}
                   >
@@ -303,7 +429,7 @@ export default function SchematicMap() {
               if (s.type === "normal") {
                 return (
                   <g
-                    key={`${line.id}-${s.id}`}
+                    key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
                     className="cursor-pointer"
                     onClick={() => alert(`Clicked station: ${s.name}`)}
                   >
@@ -315,7 +441,7 @@ export default function SchematicMap() {
               if (s.type === "interchange") {
                 return (
                   <g
-                    key={`${line.id}-${s.id}`}
+                    key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
                     className="cursor-pointer"
                     onClick={() => alert(`Clicked station: ${s.name}`)}
                   >
@@ -328,7 +454,7 @@ export default function SchematicMap() {
               if (s.type === "interchange-sm") {
                 return (
                   <g
-                    key={`${line.id}-${s.id}`}
+                    key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
                     className="cursor-pointer"
                     onClick={() => alert(`Clicked station: ${s.name}`)}
                   >
@@ -341,7 +467,7 @@ export default function SchematicMap() {
               if (s.type === "interchange-sm-2") {
                 return (
                   <g
-                    key={`${line.id}-${s.id}`}
+                    key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
                     className="cursor-pointer"
                     onClick={() => alert(`Clicked station: ${s.name}`)}
                   >
@@ -355,7 +481,7 @@ export default function SchematicMap() {
               if (s.type === "interchange-sm-3") {
                 return (
                   <g
-                    key={`${line.id}-${s.id}`}
+                    key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
                     className="cursor-pointer"
                     onClick={() => alert(`Clicked station: ${s.name}`)}
                   >
@@ -369,12 +495,12 @@ export default function SchematicMap() {
               if (s.type === "union") {
                 return (
                   <g
-                    key={`${line.id}-${s.id}`}
+                    key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
                     className="cursor-pointer"
                     onClick={() => alert(`Clicked station: ${s.name}`)}
                   >
                     <rect x={cx - 5} y={cy - 5} width={10} height={52.5} fill="grey" rx={3} ry={3} />
-                    <circle cx={cx} cy={cy + 1} r={2.25} fill="white" />
+                    <circle cx={cx} cy={cy} r={2.25} fill="white" />
                     <circle cx={cx} cy={cy + 10} r={2.25} fill="white" />
                     <circle cx={cx} cy={cy + 18} r={2.25} fill="white" />
                     <circle cx={cx} cy={cy + 26} r={2.25} fill="white" />

@@ -63,7 +63,7 @@ export const constructionLines = [
       
     ],
     stations: [
-      { id: "exhibition", name: "Exhibition", x: -187.5, y: 232.5, type: "interchange-sm" },
+      { id: "exhibition", name: "Exhibition", x: -187.5, y: 232.5, type: "normal" },
       { id: "kingBathurst", name: "King-Bathurst", x: -125, y: 162.5, type: "normal" },
       { id: "queenSpadina", name: "Queen-Spadina", x: -75, y: 125, type: "normal" },
       { id: "osgoode", name: "Osgoode", x: -25, y: 125, type: "interchange" },
