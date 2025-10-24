@@ -3,6 +3,9 @@ import { subwayLines } from "../data/schematic-data";
 import { constructionLines } from "../data/schematic-construction";
 import { proposedLines } from "../data/schematic-proposed";
 import { goLines } from "../data/go-schematic-data";
+import { streetcarLines } from "../data/streetcar-schematic-data";
+import {lakes} from "../data/lakes-schematic-data";
+import lakeUrl from "../assets/lakes.svg";
 
 // Define a helper type for path points
 type PathPoint = {
@@ -27,10 +30,19 @@ export default function SchematicMap() {
   const [showGO, setShowGO] = useState(true);
 
   const MAP_W = window.innerWidth;
-  const MAP_H = window.innerHeight;
+  const MAP_H = window.innerHeight + 100;
 
-  const Z_MIN = 1;
+  const Z_MIN = 0.5;
   const Z_MAX = 3;
+
+  // size of the lake artwork (its SVG viewBox)
+  const LAKE_W = 1280;
+  const LAKE_H = 800;
+
+  // tweak these live to line it up
+  const LAKE_SCALE = 2;   // 0.9, 1.1, etc.
+  const LAKE_DX = 325;        // +right / -left
+  const LAKE_DY = -87.5;        // +down  / -up
 
   // Screen center 
   const centerX = MAP_W / 2;
@@ -41,8 +53,9 @@ export default function SchematicMap() {
     const scaledW = MAP_W * z;
     const scaledH = MAP_H * z;
 
-    const maxX = (scaledW - MAP_W) / 2;
-    const maxY = (scaledH - MAP_H) / 2;
+    // when z < 1, (scaledW - MAP_W) is negative → clamp to 0 to avoid weirdness
+    const maxX = Math.max(0, (scaledW - MAP_W) / 2);
+    const maxY = Math.max(0, (scaledH - MAP_H) / 2);
 
     return {
       x: Math.min(maxX, Math.max(-maxX, x)),
@@ -220,9 +233,10 @@ export default function SchematicMap() {
 
 
   // Map each line object
-  const srcByRef = new WeakMap<object, "go" | "subway" | "construction" | "proposed">();
+  const srcByRef = new WeakMap<object, "go" | "subway" | "construction" | "proposed" | "lake">();
 
   goLines.forEach(l => srcByRef.set(l, "go"));
+  lakes.forEach(l => srcByRef.set(l, "lake"));
   subwayLines.forEach(l => srcByRef.set(l, "subway"));
   constructionLines.forEach(l => srcByRef.set(l, "construction"));
   proposedLines.forEach(l => srcByRef.set(l, "proposed"));
@@ -231,7 +245,9 @@ export default function SchematicMap() {
 
   // Merge active lines
   const activeLines = [
+    ...lakes,
     ...(showGO ? goLines : []),
+    ...streetcarLines,
     ...subwayLines,
     ...(showConstruction ? constructionLines : []),
     ...(showProposed ? proposedLines : []),
@@ -314,6 +330,22 @@ export default function SchematicMap() {
           display: "block",
         }}
       >
+
+      {/* Great Lakes background */}
+      <g style={{ pointerEvents: "none" }}>
+        <image
+          href={lakeUrl}
+          // center the lake on your world, then nudge by DX/DY
+          x={centerX - (LAKE_W * LAKE_SCALE) / 2 + LAKE_DX}
+          y={centerY - (LAKE_H * LAKE_SCALE) / 2 + LAKE_DY}
+          width={LAKE_W * LAKE_SCALE}
+          height={LAKE_H * LAKE_SCALE}
+          opacity={0.5}
+          // usually keep native aspect; use "none" only if you *want* stretch
+          preserveAspectRatio="xMidYMid meet"
+        />
+      </g>
+
         {/* Grid */}
         <defs>
           <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
