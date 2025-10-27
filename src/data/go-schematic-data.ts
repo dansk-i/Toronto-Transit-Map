@@ -79,7 +79,14 @@ export const goLines = [
     thickness: 8,
     pathPoints: [
         { cmd: "M", x: 0, y: 242 }, 
-        { cmd: "L", x: -200, y: 242 },
+        { cmd: "L", x: -437.5, y: 242 },
+        { cmd: "L", x: -517.5, y: 325 },
+        { cmd: "L", x: -850, y: 325, svc: "limited" },
+        { cmd: "L", x: -900, y: 380 },
+        { cmd: "L", x: -900, y: 465 },
+        { cmd: "L", x: -870, y: 495 },
+        { cmd: "L", x: -625, y: 495, svc: "peakOnly" },
+        { cmd: "L", x: -150, y: 495 },
         
     ],
     stations: [

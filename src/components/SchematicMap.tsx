@@ -50,8 +50,8 @@ export default function SchematicMap() {
 
   // Clamp offsets so you never go beyond original viewBox edges
   const clampOffset = (x: number, y: number, z: number) => {
-    const scaledW = MAP_W * z;
-    const scaledH = MAP_H * z;
+    const scaledW = MAP_W * z * 2;
+    const scaledH = MAP_H * z * 2;
 
     // when z < 1, (scaledW - MAP_W) is negative → clamp to 0 to avoid weirdness
     const maxX = Math.max(0, (scaledW - MAP_W) / 2);
