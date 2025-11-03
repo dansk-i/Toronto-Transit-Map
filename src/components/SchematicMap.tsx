@@ -20,7 +20,7 @@ type PathPoint = {
 export default function SchematicMap() {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const [zoom, setZoom] = useState(1);
+  const [zoom, setZoom] = useState(1.5);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
   const [lastPos, setLastPos] = useState<{ x: number; y: number } | null>(null);
@@ -30,9 +30,9 @@ export default function SchematicMap() {
   const [showGO, setShowGO] = useState(true);
 
   const MAP_W = window.innerWidth;
-  const MAP_H = window.innerHeight + 100;
+  const MAP_H = window.innerHeight;
 
-  const Z_MIN = 0.5;
+  const Z_MIN = 1;
   const Z_MAX = 3;
 
   // size of the lake artwork (its SVG viewBox)
@@ -50,8 +50,8 @@ export default function SchematicMap() {
 
   // Clamp offsets so you never go beyond original viewBox edges
   const clampOffset = (x: number, y: number, z: number) => {
-    const scaledW = MAP_W * z * 2;
-    const scaledH = MAP_H * z * 2;
+    const scaledW = MAP_W * z;
+    const scaledH = MAP_H * z;
 
     // when z < 1, (scaledW - MAP_W) is negative → clamp to 0 to avoid weirdness
     const maxX = Math.max(0, (scaledW - MAP_W) / 2);
@@ -127,8 +127,8 @@ export default function SchematicMap() {
   };
 
   // Translate station coords to screen space
-  const tx = (x: number) => x + centerX;
-  const ty = (y: number) => y + centerY;
+  const tx = (x: number) => x + centerX * 2;
+  const ty = (y: number) => y + centerY * 2;
 
   // Service-styling 
     const MAP_BG = "#000"; 
@@ -319,7 +319,7 @@ export default function SchematicMap() {
       
 
       <svg
-        viewBox={`0 0 ${MAP_W} ${MAP_H}`}
+        viewBox={`0 0 ${MAP_W * 2} ${MAP_H * 2}`}
         width={MAP_W}
         height={MAP_H}
         preserveAspectRatio="xMidYMid meet"
@@ -336,12 +336,12 @@ export default function SchematicMap() {
         <image
           href={lakeUrl}
           // center the lake on your world, then nudge by DX/DY
-          x={centerX - (LAKE_W * LAKE_SCALE) / 2 + LAKE_DX}
-          y={centerY - (LAKE_H * LAKE_SCALE) / 2 + LAKE_DY}
+          x={centerX * 2 - (LAKE_W * LAKE_SCALE) / 2 + LAKE_DX}
+          y={centerY * 2 - (LAKE_H * LAKE_SCALE) / 2 + LAKE_DY}
           width={LAKE_W * LAKE_SCALE}
           height={LAKE_H * LAKE_SCALE}
           opacity={0.5}
-          // usually keep native aspect; use "none" only if you *want* stretch
+          // use "none" only for stretch
           preserveAspectRatio="xMidYMid meet"
         />
       </g>
