@@ -33,7 +33,7 @@ export default function SchematicMap() {
   const MAP_H = window.innerHeight;
 
   const Z_MIN = 1;
-  const Z_MAX = 3;
+  const Z_MAX = 5;
 
   // size of the lake artwork (its SVG viewBox)
   const LAKE_W = 1280;
@@ -414,7 +414,7 @@ export default function SchematicMap() {
                     className="cursor-pointer"
                     onClick={() => alert(`Clicked station: ${s.name}`)}
                   >
-                    <circle cx={cx} cy={cy} r={4} fill="white" stroke={line.color} strokeWidth={1.25} />
+                    <circle cx={cx} cy={cy} r={4} fill="white" stroke={line.color} strokeWidth={1.5} />
                   </g>
                 );
               }
@@ -440,6 +440,19 @@ export default function SchematicMap() {
                     onClick={() => alert(`Clicked station: ${s.name}`)}
                   >
                     <rect x={cx - 5} y={cy - 5} width={10} height={10} fill="grey" rx={3} ry={3} />
+                    <circle cx={cx} cy={cy} r={2.25} fill="white" />
+                  </g>
+                );
+              }
+              
+              if (s.type === "finchWest") {
+                return (
+                   <g
+                    key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
+                    className="cursor-pointer"
+                    onClick={() => alert(`Clicked station: ${s.name}`)}
+                  >
+                    <rect x={cx - 5.25} y={cy - 5.25} width={10.5} height={10.5} fill="grey" rx={3} ry={3}  transform={`rotate(45 ${cx} ${cy})`} />
                     <circle cx={cx} cy={cy} r={2.25} fill="white" />
                   </g>
                 );

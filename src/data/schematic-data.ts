@@ -68,8 +68,8 @@ export const subwayLines = [
       { cmd: "L", x: -75, y: -35 },
       { cmd: "L", x: -125, y: -75 },
       { cmd: "L", x: -125, y: -250 },
-      { cmd: "L", x: -325, y: -350},
-      { cmd: "L", x: -325, y: -400 }
+      { cmd: "L", x: -225, y: -350},
+      { cmd: "L", x: -225, y: -400 }
     ],
     stations: [
       { id: "finch", name: "Finch", x: 25, y: -285, type: "normal" },
@@ -110,12 +110,12 @@ export const subwayLines = [
       { id: "yorkdale", name: "Yorkdale", x: -125, y: -185, type: "normal" },
       { id: "wilson", name: "Wilson", x: -125, y: -210, type: "normal" },
       { id: "sheppardWest", name: "Sheppard West", x: -125, y: -235, type: "normal" },
-      { id: "downsviewPark", name: "Downsview Park", x: -165, y: -270, type: "normal" },
-      { id: "finchWest", name: "Finch West", x: -215, y: -295, type: "normal" },
-      { id: "yorkU", name: "York University", x: -265, y: -320, type: "normal" },
-      { id: "pioneerVillage", name: "Pioneer Village", x: -300, y: -337.5, type: "normal" },
-      { id: "highway407", name: "Highway 407", x: -325, y: -370, type: "normal" },
-      { id: "vaughan", name: "Vaughan Metropolitan Centre", x: -325, y: -400, type: "normal" }
+      { id: "downsviewPark", name: "Downsview Park", x: -145, y: -270, type: "normal" },
+      { id: "finchWest", name: "Finch West", x: -170, y: -295, type: "normal" },
+      { id: "yorkU", name: "York University", x: -195, y: -320, type: "normal" },
+      { id: "pioneerVillage", name: "Pioneer Village", x: -212.5, y: -337.5, type: "normal" },
+      { id: "highway407", name: "Highway 407", x: -225, y: -370, type: "normal" },
+      { id: "vaughan", name: "Vaughan Metropolitan Centre", x: -225, y: -400, type: "normal" }
     ]
   },
   // LINE 4 — Sheppard

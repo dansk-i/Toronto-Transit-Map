@@ -119,7 +119,7 @@ export const constructionLines = [
     id: "line5-surface",
     name: "Eglinton Crosstown LRT (Surface)",
     color: "#f27f30",
-    thickness: 4,
+    thickness: 5,
     pathPoints: [
       { cmd: "M", x: 160, y: -100 }, // continues from underground
       { cmd: "L", x: 175, y: -100 },
@@ -145,25 +145,36 @@ export const constructionLines = [
     ],
   },
   {
-    id: "temp",
-    name: "temp",
-    color: "#f27f30",
-    thickness: 8,
+    id: "line6",
+    name: "Finch West LRT",
+    color: "#70706fff",
+    thickness: 5,
     pathPoints: [
-      // { cmd: "M", x: -10, y: 208 },
-      // { cmd: "L", x: 10, y: 208 },
+       { cmd: "M", x: -170, y: -295 },
+       { cmd: "L", x: -600, y: -295 },
+      // { cmd: "L", x: -625, y: -275 },
 
-      // { cmd: "L", x: 10, y: 216 },
-      // { cmd: "L", x: -10, y: 216 },
-
-      // { cmd: "L", x: -10, y: 224 },
-      // { cmd: "L", x: 10, y: 224 },
-
-      // { cmd: "L", x: 10, y: 232 },
-      // { cmd: "L", x: -10, y: 232 },
+    
     ],
     stations: [
-     
+     { id: "finchWest", name: "Finch West", x: -170, y: -295, type: "finchWest" },
+     { id: "sentinel", name: "Sentinel", x: -200, y: -295, type: "normal" },
+     { id: "tobermory", name: "Tobermory", x: -225, y: -295, type: "normal" },
+     { id: "driftwood", name: "Driftwood", x: -250, y: -295, type: "normal" },
+     { id: "janeFinch", name: "Jane and Finch", x: -275, y: -295, type: "normal" },
+     { id: "norfinchOakdale", name: "Norfinch Oakdale", x: -300, y: -295, type: "normal" },
+     { id: "signetArrow", name: "Signet Arrow", x: -325, y: -295, type: "normal" },
+     { id: "emery", name: "Emery", x: -350, y: -295, type: "normal" },
+     { id: "milvanRumike", name: "Milvan Rumike ", x: -375, y: -295, type: "normal" },
+     { id: "duncanwoods", name: "Duncanwoods", x: -400, y: -295, type: "normal" },
+     { id: "pearldale", name: "Pearldale", x: -425, y: -295, type: "normal" },
+     { id: "rowntreeMills", name: "Rowntree Mills", x: -450, y: -295, type: "normal" },
+     { id: "mountOlive", name: "Mount Olive", x: -475, y: -295, type: "normal" },
+     { id: "stevenson", name: "Stevenson ", x: -500, y: -295, type: "normal" },
+     { id: "albion", name: "Albion", x: -525, y: -295, type: "normal" },
+     { id: "martinGrove", name: "Martin Grove", x: -550, y: -295, type: "normal" },
+     { id: "westmore", name: "Westmore", x: -575, y: -295, type: "normal" },
+     { id: "humberCollege", name: "Humber College", x: -600, y: -295, type: "normal" },
       
     ],
   },
