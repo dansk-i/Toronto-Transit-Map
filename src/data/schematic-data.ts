@@ -84,21 +84,21 @@ export const subwayLines = [
       { id: "rosedale", name: "Rosedale", x: 25, y: 0, type: "normal" },
       
       { id: "bloorYonge", name: "Bloor–Yonge", x: 25, y: 25, type: "interchange" },
-      { id: "wellesley", name: "Wellesley", x: 25, y: 55, type: "normal" },
-      { id: "college", name: "College", x: 25, y: 75, type: "normal" },
-      { id: "dundas", name: "Dundas", x: 25, y: 95, type: "normal" },
-      { id: "queen", name: "Queen", x: 25, y: 125, type: "normal" },
-      { id: "king", name: "King", x: 25, y: 162.5, type: "normal" },
+      { id: "wellesley", name: "Wellesley", x: 25, y: 55.5, type: "normal" },
+      { id: "college", name: "College", x: 25, y: 80.5, type: "normal" },
+      { id: "dundas", name: "Dundas", x: 25, y: 105.5, type: "normal" },
+      { id: "queen", name: "Queen", x: 25, y: 137.5, type: "normal" },
+      { id: "king", name: "King", x: 25, y: 170, type: "normal" },
 
 
       { id: "union", name: "Union", x: 0, y: 200, type: "interchange" },
 
 
-      { id: "stAndrew", name: "St. Andrew", x: -25, y: 162.5, type: "normal" },
-      { id: "osgoode", name: "Osgoode", x: -25, y: 125, type: "normal" },
-      { id: "stPatrick", name: "St. Patrick", x: -25, y: 95, type: "normal" },
-      { id: "queensPark", name: "Queen's Park", x: -25, y: 75, type: "normal" },
-      { id: "museum", name: "Museum", x: -25, y: 55, type: "normal" },
+      { id: "stAndrew", name: "St. Andrew", x: -25, y: 170, type: "normal" },
+      { id: "osgoode", name: "Osgoode", x: -25, y: 137.5, type: "normal" },
+      { id: "stPatrick", name: "St. Patrick", x: -25, y: 105.5, type: "normal" },
+      { id: "queensPark", name: "Queen's Park", x: -25, y: 80.5, type: "normal" },
+      { id: "museum", name: "Museum", x: -25, y: 55.5, type: "normal" },
       { id: "stGeorge", name: "St. George", x: -25, y: 25, type: "interchange" },
       { id: "spadina", name: "Spadina", x: -50, y: 15, type: "interchange" },
 

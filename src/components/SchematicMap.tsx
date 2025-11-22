@@ -6,6 +6,7 @@ import { goLines } from "../data/go-schematic-data";
 import { streetcarLines } from "../data/streetcar-schematic-data";
 import {lakes} from "../data/lakes-schematic-data";
 import lakeUrl from "../assets/lakes.svg";
+import lakeUrl2 from "../assets/lakes2.svg";
 
 // Define a helper type for path points
 type PathPoint = {
@@ -36,13 +37,13 @@ export default function SchematicMap() {
   const Z_MAX = 5;
 
   // size of the lake artwork (its SVG viewBox)
-  const LAKE_W = 1280;
+  const LAKE_W = 2000;
   const LAKE_H = 800;
 
   // tweak these live to line it up
   const LAKE_SCALE = 2;   // 0.9, 1.1, etc.
-  const LAKE_DX = 325;        // +right / -left
-  const LAKE_DY = -87.5;        // +down  / -up
+  const LAKE_DX = 62.5;        // +right / -left
+  const LAKE_DY = -25;        // +down  / -up
 
   // Screen center 
   const centerX = MAP_W / 2;
@@ -246,8 +247,8 @@ export default function SchematicMap() {
   // Merge active lines
   const activeLines = [
     ...lakes,
-    ...(showGO ? goLines : []),
     ...streetcarLines,
+    ...(showGO ? goLines : []),
     ...subwayLines,
     ...(showConstruction ? constructionLines : []),
     ...(showProposed ? proposedLines : []),
@@ -338,6 +339,21 @@ export default function SchematicMap() {
           // center the lake on your world, then nudge by DX/DY
           x={centerX * 2 - (LAKE_W * LAKE_SCALE) / 2 + LAKE_DX}
           y={centerY * 2 - (LAKE_H * LAKE_SCALE) / 2 + LAKE_DY}
+          width={LAKE_W * LAKE_SCALE}
+          height={LAKE_H * LAKE_SCALE}
+          opacity={0.5}
+          // use "none" only for stretch
+          preserveAspectRatio="xMidYMid meet"
+        />
+      </g>
+
+      
+      {/*  Simcoe */}
+      <g style={{ pointerEvents: "none" }}>
+        <image
+          href={lakeUrl2}
+          x={centerX * 2 - (LAKE_W * LAKE_SCALE) / 2 - 187.5}
+          y={centerY * 2 - (LAKE_H * LAKE_SCALE) / 2 - 400}
           width={LAKE_W * LAKE_SCALE}
           height={LAKE_H * LAKE_SCALE}
           opacity={0.5}
@@ -458,6 +474,20 @@ export default function SchematicMap() {
                 );
               }
 
+              if (s.type === "loop") {
+                return (
+                  <g
+                    key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
+                    className=""
+                  >
+                    {/* Outer ring */}
+                    <circle cx={cx} cy={cy} r={2.5} fill={line.color} />
+                    {/* Inner hole */}
+                    <circle cx={cx} cy={cy} r={1} fill="black" />
+                  </g>
+                );
+              }
+
               return null;
             })
           )
@@ -482,6 +512,19 @@ export default function SchematicMap() {
                   </g>
                 );
               }
+
+               if (s.type === "normal-sm") {
+                return (
+                  <g
+                    key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
+                    className="cursor-pointer"
+                    onClick={() => alert(`Clicked station: ${s.name}`)}
+                  >
+                    <circle cx={cx} cy={cy} r={3} fill="white" stroke={line.color} strokeWidth={1} />
+                  </g>
+                );
+              }
+
 
               if (s.type === "interchange") {
                 return (
