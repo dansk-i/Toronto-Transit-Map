@@ -21,7 +21,7 @@ type PathPoint = {
 export default function SchematicMap() {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const [zoom, setZoom] = useState(1.5);
+  const [zoom, setZoom] = useState(2);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
   const [lastPos, setLastPos] = useState<{ x: number; y: number } | null>(null);
@@ -43,11 +43,11 @@ export default function SchematicMap() {
   // tweak these live to line it up
   const LAKE_SCALE = 2;   // 0.9, 1.1, etc.
   const LAKE_DX = 62.5;        // +right / -left
-  const LAKE_DY = -25;        // +down  / -up
+  const LAKE_DY = 225;        // +down  / -up
 
   // Screen center 
   const centerX = MAP_W / 2;
-  const centerY = MAP_H / 2;
+  const centerY = (MAP_H / 2) + 25;
 
   // Clamp offsets so you never go beyond original viewBox edges
   const clampOffset = (x: number, y: number, z: number) => {

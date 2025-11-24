@@ -46,4 +46,65 @@ export const streetcarLines = [
         { id: "dufferin-gate", name: "Dufferin Gate Loop", x: -220, y: 212.5, type: "loop" }
     ],
   },
+  {
+    id: "510",
+    name: "510 Spadina",
+    color: "#800000",
+    thickness: 2.5,
+    pathPoints: [
+        { cmd: "M", x: -50, y: 15 },
+        { cmd: "L", x: -50, y: 250 },
+    ],
+    stations: [
+       //{ id: "neville-park", name: "Neville Park Loop", x: 400, y: 145, type: "loop" }
+    ],
+  },
+  {
+    id: "511",
+    name: "511 Bathurst",
+    color: "#800000",
+    thickness: 2.5,
+    pathPoints: [
+        { cmd: "M", x: -125, y: 15 },
+        { cmd: "L", x: -125, y: 250 },
+    ],
+    stations: [
+       //{ id: "neville-park", name: "Neville Park Loop", x: 400, y: 145, type: "loop" }
+    ],
+  },
+  {
+    id: "506",
+    name: "506 Carlton",
+    color: "#800000",
+    thickness: 2.5,
+    pathPoints: [
+      { cmd: "M", x: -325, y: 80.5 },
+      { cmd: "L", x: 75, y: 80.5 },
+      { cmd: "L", x: 75, y: 92.5 },
+      { cmd: "L", x: 75, y: 92.5 },
+      { cmd: "L", x: 335, y: 92.5 },
+      { cmd: "L", x: 335, y: 80.5 },
+      { cmd: "L", x: 375, y: 80.5 },
+      { cmd: "L", x: 375, y: 25 },
+    ],
+    stations: [
+       { id: "high-park", name: "High Park Loop", x: -325, y: 80.5, type: "loop" }
+    ],
+  },
+  {
+    id: "505",
+    name: "505 Dundas",
+    color: "#800000",
+    thickness: 2.5,
+    pathPoints: [
+      { cmd: "M", x: -275, y: 62.5 },
+      { cmd: "L", x: -250, y: 80.5 },
+      { cmd: "L", x: -225, y: 105.5 },
+      { cmd: "L", x: 125, y: 105.5},
+      { cmd: "L", x: 125, y: 25},
+    ],
+    stations: [
+       //{ id: "neville-park", name: "Neville Park Loop", x: 400, y: 145, type: "loop" }
+    ],
+  },
 ];
