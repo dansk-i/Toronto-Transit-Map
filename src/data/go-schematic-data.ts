@@ -16,7 +16,7 @@ export const goLines = [
             { cmd: "L", x: -75, y: -650 },
             { cmd: "L", x: -75, y: -750 },
             { cmd: "L", x: -125, y: -800 },
-            { cmd: "L", x: -125, y: -900 },
+            { cmd: "L", x: -125, y: -950 },
             
         ],
         stations: [
@@ -36,12 +36,19 @@ export const goLines = [
         { cmd: "L", x: -300, y: -50 },
         { cmd: "L", x: -300, y: -125 },
         { cmd: "L", x: -350, y: -187.5 },
-        { cmd: "L", x: -750, y: -187.5 },
+        { cmd: "L", x: -587.5, y: -187.5, svc: "limited" },
+        { cmd: "L", x: -762.5, y: -187.5, svc: "peakOnly" },
+        { cmd: "L", x: -1500, y: -187.5 },
     ],
     stations: [
         { id: "dundasWest", name: "Dundas West", x: -259, y: 25, type: "interchange-sm-2" },
         { id: "mountDennis", name: "Mount Dennis", x: -309, y: -100, type: "interchange-sm-2" },
         { id: "weston", name: "Weston", x: -362.5, y: -189, type: "interchange-sm-3" },
+        { id: "woodbine", name: "Woodbine", x: -475, y: -189, type: "interchange-sm-3" },
+        { id: "malton", name: "Malton", x: -525, y: -187.5, type: "normal-sm" },
+        { id: "bramalea", name: "Bramalea GO", x: -587.5, y: -187.5, type: "normal-sm" },
+        { id: "brampton", name: "Brampton", x: -675, y: -187.5, type: "normal-sm" },
+        { id: "mountPleasant", name: "Mount Pleasant", x: -762.5, y: -187.5, type: "normal-sm" },
     ],
   },
   {
@@ -57,10 +64,11 @@ export const goLines = [
         { cmd: "L", x: -308, y: -47 },
         { cmd: "L", x: -308, y: -122 },
         { cmd: "L", x: -354, y: -180 },
-        { cmd: "L", x: -750, y: -180 },
+        { cmd: "L", x: -512.5, y: -180 },
+        { cmd: "L", x: -537.5, y: -150 },
     ],
     stations: [
-       // { id: "union", name: "Union", x: 0, y: 223.5, type: "interchange-sm" },
+        { id: "pearson", name: "Pearson Airport", x: -537.5, y: -150, type: "normal-sm" },
     ],
   },
   {
@@ -80,6 +88,26 @@ export const goLines = [
         { id: "lansdowne", name: "Lansdowne", x: -225, y: 25, type: "interchange-sm" },
     ],
   },
+
+  {
+    id: "lakeShoreWest-Hamilton",
+    name: "Hamilton Lakeshore West",
+    color: "#951938",
+    thickness: 8,
+    pathPoints: [
+      
+        { cmd: "M", x: -925, y: 450, svc: "peakOnly" },
+        { cmd: "L", x: -925, y: 537.5 },
+        { cmd: "L", x: -905, y: 560 },
+        { cmd: "L", x: -800, y: 560 },
+        
+        
+    ],
+    stations: [
+        //{ id: "exhibitionGO", name: "Exhibition GO", x: -187.5, y: 242, type: "interchange" },
+        
+    ],
+  },
   {
     id: "lakeShoreWest",
     name: "Lakeshore West Line",
@@ -87,22 +115,23 @@ export const goLines = [
     thickness: 8,
     pathPoints: [
         { cmd: "M", x: 0, y: 242 }, 
-        
-        { cmd: "L", x: -845, y: 242, svc: "limited" },
-        { cmd: "L", x: -900, y: 302 },
-        { cmd: "L", x: -900, y: 450 },
-        { cmd: "L", x: -850, y: 495 },
+        { cmd: "L", x: -870, y: 242 },
+        { cmd: "L", x: -925, y: 302, svc: "limited" },
+        { cmd: "L", x: -925, y: 450 },
+        { cmd: "L", x: -875, y: 495 },
         { cmd: "L", x: -625, y: 495, svc: "peakOnly" },
         { cmd: "L", x: -150, y: 495 },
         
     ],
     stations: [
-        { id: "exhibitionGO", name: "Exhibition GO", x: -187.5, y: 232.5, type: "interchange-sm-3" },
-        { id: "mimico", name: "Mimico", x: -350, y: 242, type: "normal-sm" },
-        { id: "longBranch", name: "Long Branch", x: -400, y: 242, type: "normal-sm" },
+        { id: "exhibitionGO", name: "Exhibition GO", x: -187.5, y: 242, type: "interchange" },
+        { id: "mimico", name: "Mimico", x: -425, y: 242, type: "normal-sm" },
+        { id: "longBranch", name: "Long Branch", x: -550, y: 242, type: "normal-sm" },
+        { id: "portCreditGo", name: "Port Credit Go", x: -675, y: 242, type: "normal-sm" },
 
     ],
   },
+
   {
     id: "lakeShoreEast",
     name: "Lakeshore East Line",
@@ -121,8 +150,8 @@ export const goLines = [
         { cmd: "L", x: 525, y: 42},
         { cmd: "L", x: 625, y: -52.5},
         { cmd: "L", x: 625, y: -110},
-        { cmd: "L", x: 640, y: -125},
-        { cmd: "L", x: 700, y: -125},
+        { cmd: "L", x: 660, y: -142.5},
+        //{ cmd: "L", x: 700, y: -142.5},
         { cmd: "L", x: 717.5, y: -142.5},
         { cmd: "L", x: 910, y: -142.5},
         { cmd: "L", x: 1050, y: -300},

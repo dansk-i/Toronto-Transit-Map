@@ -29,6 +29,7 @@ export default function SchematicMap() {
   const [showConstruction, setShowConstruction] = useState(true);
   const [showProposed, setShowProposed] = useState(true);
   const [showGO, setShowGO] = useState(true);
+  const [showStreetcar, setShowStreetcar] = useState(true);
 
   const MAP_W = window.innerWidth;
   const MAP_H = window.innerHeight;
@@ -42,7 +43,7 @@ export default function SchematicMap() {
 
   // tweak these live to line it up
   const LAKE_SCALE = 2;   // 0.9, 1.1, etc.
-  const LAKE_DX = 62.5;        // +right / -left
+  const LAKE_DX = 25;        // +right / -left
   const LAKE_DY = 225;        // +down  / -up
 
   // Screen center 
@@ -234,20 +235,21 @@ export default function SchematicMap() {
 
 
   // Map each line object
-  const srcByRef = new WeakMap<object, "go" | "subway" | "construction" | "proposed" | "lake">();
+  const srcByRef = new WeakMap<object, "go" | "subway" | "construction" | "proposed" | "lake" | "streetcar">();
 
   goLines.forEach(l => srcByRef.set(l, "go"));
   lakes.forEach(l => srcByRef.set(l, "lake"));
   subwayLines.forEach(l => srcByRef.set(l, "subway"));
   constructionLines.forEach(l => srcByRef.set(l, "construction"));
   proposedLines.forEach(l => srcByRef.set(l, "proposed"));
+  streetcarLines.forEach(l => srcByRef.set(l, "streetcar"));
 
   const goIds = new Set(goLines.map(l => l.id));
 
   // Merge active lines
   const activeLines = [
     ...lakes,
-    ...streetcarLines,
+    ...(showStreetcar ? streetcarLines : []),
     ...(showGO ? goLines : []),
     ...subwayLines,
     ...(showConstruction ? constructionLines : []),
@@ -315,6 +317,23 @@ export default function SchematicMap() {
             />
           </button>
         </label>
+
+         {/* Streetcar toggle */}
+          <label className="flex items-center gap-2 text-white">
+            <span>Streetcar</span>
+            <button
+              onClick={() => setShowStreetcar(v => !v)}
+              className={`relative w-12 h-6 rounded-full transition-colors ${
+                showStreetcar ? "bg-red-500" : "bg-gray-600"
+              }`}
+            >
+              <span
+                className={`absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow transform transition-transform ${
+                  showStreetcar ? "translate-x-6" : "translate-x-0"
+                }`}
+              />
+            </button>
+          </label>
 
       </div>
       
@@ -470,6 +489,20 @@ export default function SchematicMap() {
                   >
                     <rect x={cx - 5.25} y={cy - 5.25} width={10.5} height={10.5} fill="grey" rx={3} ry={3}  transform={`rotate(45 ${cx} ${cy})`} />
                     <circle cx={cx} cy={cy} r={2.25} fill="white" />
+                  </g>
+                );
+              }
+
+               if (s.type === "interchange-sm-3") {
+                return (
+                  <g
+                    key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
+                    className="cursor-pointer"
+                    onClick={() => alert(`Clicked station: ${s.name}`)}
+                  >
+                    <rect x={cx - 5} y={cy - 5} width={10} height={20} fill="grey" rx={3} ry={3} />
+                    <circle cx={cx} cy={cy + 1} r={2.5} fill="white" />
+                    <circle cx={cx} cy={cy + 9} r={2.5} fill="white" />
                   </g>
                 );
               }
