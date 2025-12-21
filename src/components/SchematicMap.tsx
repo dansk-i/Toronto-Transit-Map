@@ -7,6 +7,17 @@ import { streetcarLines } from "../data/streetcar-schematic-data";
 import {lakes} from "../data/lakes-schematic-data";
 import lakeUrl from "../assets/lakes.svg";
 import lakeUrl2 from "../assets/lakes2.svg";
+import goBarrie from "../assets/GO_Barrie.svg";
+import goKitchener from "../assets/GO_Kitchener.svg";
+import goLakeshoreEast from "../assets/GO_Lakeshore_East.svg";
+import goLakeshoreWest from "../assets/GO_Lakeshore_West.svg";
+import goMilton from "../assets/GO_Milton.svg";
+import goRichmondHill from "../assets/GO_Richmond_Hill.svg";
+import goStouffville from "../assets/GO_Stouffville.svg";
+import upExpress from "../assets/UP_Express.svg";
+
+// ---------------------------------------------------------------------------
+
 
 // Define a helper type for path points
 type PathPoint = {
@@ -67,13 +78,28 @@ function TTCLogo() {
   );
 }
 
-// Optional: map specific line names/ids to logos
 const LINE_LOGOS: Record<string, React.ReactNode> = {
-  // adjust keys to match whatever you store (line.name, line.id, etc.)
-  "Line 1": <TTCLogo />,
-  "Line 2": <TTCLogo />,
-  "Line 4": <TTCLogo />,
+    // GO lines (keyed by goLines[i].id)
+    barrie: <img src={goBarrie} className="h-10 w-10" alt="Barrie Line" />,
+    kitchener: <img src={goKitchener} className="h-10 w-10" alt="Kitchener Line" />,
+    lakeShoreEast: <img src={goLakeshoreEast} className="h-10 w-10" alt="Lakeshore East Line" />,
+    lakeShoreWest: <img src={goLakeshoreWest} className="h-10 w-10" alt="Lakeshore West Line" />,
+    milton: <img src={goMilton} className="h-10 w-10" alt="Milton Line" />,
+    richmondHill: <img src={goRichmondHill} className="h-10 w-10" alt="Richmond Hill Line" />,
+    stouffville: <img src={goStouffville} className="h-10 w-10" alt="Stouffville Line" />,
+    upExpress: <img src={upExpress} className="h-10 w-10" alt="UP Express" />,
+
+
+    // Special cases / branches that should share a logo:
+    "lakeShoreWest-Hamilton": <img src={goLakeshoreWest} className="h-10 w-10" alt="Lakeshore West (Hamilton)" />,
+
+    // TTC subway (if you want to keep these)
+    "Line 1": <TTCLogo />,
+    "Line 2": <TTCLogo />,
+    "Line 4": <TTCLogo />,
 };
+
+
 
 function LinePopupContent({ logo, name }: { logo?: React.ReactNode; name: string }) {
   return (
@@ -238,19 +264,27 @@ export default function SchematicMap() {
 };
 
 
-  const showLinePopup = (e: React.MouseEvent, lineName: string, lineColor?: string) => {
+  const showLinePopup = (
+    e: React.MouseEvent,
+    displayName: string,
+    lineColor?: string,
+    logoKey?: string
+  ) => {
     const p = getRelativePoint(e);
     if (!p) return;
+
+    const key = logoKey ?? displayName;
 
     setPopup({
       kind: "line",
       x: p.x,
       y: p.y,
-      name: lineName,
+      name: displayName, 
       color: lineColor,
-      logo: LINE_LOGOS[lineName] ?? <LineBadge color={lineColor} />,
+      logo: LINE_LOGOS[key] ?? <LineBadge color={lineColor} />, 
     });
   };
+
 
   const showStationPopupAt = (stationName: string, svgX: number, svgY: number) => {
   const p = svgPointToContainerPx(svgX, svgY);
@@ -322,6 +356,8 @@ export default function SchematicMap() {
         e.clientX <= rect.right &&
         e.clientY >= rect.top &&
         e.clientY <= rect.bottom;
+
+      if (inside) setPopup(null);
 
       const mouseVec = inside
         ? { x: e.clientX - cx, y: e.clientY - cy }
@@ -741,7 +777,7 @@ export default function SchematicMap() {
                       line.thickness,
                       seg.d,
                       `${srcByRef.get(line) ?? "unknown"}-${line.id}-seg-${idx}`,
-                      (e) => showLinePopup(e, line.name, line.color) 
+                      (e) => showLinePopup(e, line.name, line.color, line.id) 
                     )
                   )}
                 </>
@@ -758,10 +794,11 @@ export default function SchematicMap() {
                 strokeLinecap="round"
                 fill="none"
                 className="cursor-pointer"
-                onClick={(e) => {
-                    e.stopPropagation();                   
-                    showLinePopup(e, line.name, line.color);
-                  }}
+               onClick={(e) => {
+                e.stopPropagation();
+                showLinePopup(e, line.name, line.color, line.id); 
+              }}
+
               />
             );
           }
