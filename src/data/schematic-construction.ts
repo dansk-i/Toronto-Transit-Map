@@ -102,20 +102,20 @@ export const constructionLines = [
       { id: "mountDennis", name: "Mount Dennis", x: -300, y: -100, type: "normal" },
     ],
   },
-  {
-    id: "hurontario",
-    name: "Hurrontario LRT",
-    color: "#0fbd9a",
-    thickness: 5,
-    pathPoints: [
-      { cmd: "M", x: -675, y: -187.5  },
-      { cmd: "L", x: -675, y: 235 }
+  // {
+  //   id: "hurontario",
+  //   name: "Hurrontario LRT",
+  //   color: "#0ba284ff",
+  //   thickness: 5,
+  //   pathPoints: [
+  //     { cmd: "M", x: -850, y: -187.5  },
+  //     { cmd: "L", x: -550, y: 242 }
       
-    ],
-    stations: [
-      { id: "brampton", name: "Brampton Gateway", x: -675, y: -187.5, type: "interchange-sm" },
-      // { id: "martinGrove", name: "Martin Grove", x: -487.5, y: -100, type: "normal" },
+  //   ],
+  //   stations: [
+  //     { id: "brampton", name: "Brampton Gateway", x: -850, y: -187.5, type: "interchange-sm" },
+  //     { id: "martinGrove", name: "Martin Grove", x: -550, y: 242, type: "interchange-sm" },
      
-    ],
-  },
+  //   ],
+  // },
 ];

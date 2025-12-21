@@ -18,8 +18,185 @@ type PathPoint = {
   svc?: "rapid" | "limited" | "peakOnly";
 };
 
+
+
+type PopupKind = "line" | "station";
+type PopupPlacement = "left" | "right" | "top" | "bottom";
+
+type PopupState =
+  | {
+      kind: "line";
+      x: number; // px relative to container
+      y: number;
+      name: string;
+      color?: string;
+      logo?: React.ReactNode;
+    }
+  | {
+      kind: "station";
+      x: number;
+      y: number;
+      name: string;
+      logo?: React.ReactNode;
+      // you can expand this later
+      details?: Array<{ label: string; value: string }>;
+    }
+  | null;
+
+function clamp(v: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, v));
+}
+
+function LineBadge({ color }: { color?: string }) {
+  return (
+    <div
+      className="h-8 w-8 rounded-xl border border-white/10"
+      style={{ backgroundColor: color ?? "rgba(255,255,255,0.15)" }}
+      aria-hidden="true"
+    />
+  );
+}
+
+// Placeholder logo (swap this with real SVG whenever)
+function TTCLogo() {
+  return (
+    <svg viewBox="0 0 64 64" className="h-8 w-8" aria-hidden="true">
+      <circle cx="32" cy="32" r="30" fill="currentColor" opacity="0.15" />
+      <path d="M16 22h32v6H35v22h-6V28H16z" fill="currentColor" opacity="0.9" />
+    </svg>
+  );
+}
+
+// Optional: map specific line names/ids to logos
+const LINE_LOGOS: Record<string, React.ReactNode> = {
+  // adjust keys to match whatever you store (line.name, line.id, etc.)
+  "Line 1": <TTCLogo />,
+  "Line 2": <TTCLogo />,
+  "Line 4": <TTCLogo />,
+};
+
+function LinePopupContent({ logo, name }: { logo?: React.ReactNode; name: string }) {
+  return (
+    <div className="flex items-center gap-3">
+      <div className="shrink-0">{logo}</div>
+      <div>
+        <div className="text-sm font-semibold leading-tight">{name}</div>
+        <div className="mt-1 text-xs text-white/70">Line</div>
+      </div>
+    </div>
+  );
+}
+
+function StationPopupContent({
+  logo,
+  name,
+  details,
+}: {
+  logo?: React.ReactNode;
+  name: string;
+  details?: Array<{ label: string; value: string }>;
+}) {
+  return (
+    <div className="min-w-[260px]">
+      {/* Header with logo slot */}
+      <div className="flex items-center gap-3 border-b border-white/10 pb-3">
+        <div className="shrink-0">{logo}</div>
+        <div className="min-w-0">
+          <div className="text-base font-semibold leading-tight">{name}</div>
+          <div className="mt-0.5 text-xs text-white/70">Station</div>
+        </div>
+      </div>
+
+      {/* Details */}
+      <div className="pt-3 space-y-2">
+        {details?.length ? (
+          details.map((d, i) => (
+            <div key={i} className="flex items-start justify-between gap-3">
+              <div className="text-xs text-white/60">{d.label}</div>
+              <div className="text-xs text-white/85 text-right">{d.value}</div>
+            </div>
+          ))
+        ) : (
+          <div className="text-sm text-white/75 leading-relaxed">
+            Station details go here (lines served, transfers, accessibility, notes).
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function MapPopup({
+  x,
+  y,
+  placement = "left",
+  onClose,
+  children,
+  containerWidth,
+  containerHeight,
+}: {
+  x: number;
+  y: number;
+  placement?: PopupPlacement;
+  onClose?: () => void;
+  children: React.ReactNode;
+  containerWidth?: number;
+  containerHeight?: number;
+}) {
+  const safeX = containerWidth != null ? clamp(x, 12, containerWidth - 12) : x;
+  const safeY = containerHeight != null ? clamp(y, 12, containerHeight - 12) : y;
+
+
+  const translateByPlacement: Record<PopupPlacement, string> = {
+    left: "translate(16px, -50%)",
+    right: "translate(calc(-100% - 16px), -50%)",
+    top: "translate(-50%, 16px)",
+    bottom: "translate(-50%, calc(-100% - 16px))",
+  };
+
+  const tailByPlacement: Record<PopupPlacement, string> = {
+    left:
+      "absolute -left-2 top-1/2 h-4 w-4 -translate-y-1/2 rotate-45 bg-neutral-700/95 border-l border-b border-white/10",
+    right:
+      "absolute -right-2 top-1/2 h-4 w-4 -translate-y-1/2 rotate-45 bg-neutral-700/95 border-r border-t border-white/10",
+    top:
+      "absolute left-1/2 -top-2 h-4 w-4 -translate-x-1/2 rotate-45 bg-neutral-700/95 border-l border-t border-white/10",
+    bottom:
+      "absolute left-1/2 -bottom-2 h-4 w-4 -translate-x-1/2 rotate-45 bg-neutral-700/95 border-r border-b border-white/10",
+  };
+
+  return (
+    <div
+      data-popup="1"
+      className="absolute z-50"
+      style={{ left: safeX, top: safeY, transform: translateByPlacement[placement] }}
+    >
+      <div className="relative">
+        <div className={tailByPlacement[placement]} />
+        <div data-popup="1" className="relative min-w-[220px] max-w-[360px] rounded-2xl border border-white/10 bg-neutral-700/95 text-white shadow-xl backdrop-blur" onMouseDown={(e) => e.stopPropagation()} onClick={(e) => e.stopPropagation()}>
+          {onClose && (
+            <button
+              onClick={onClose}
+              className="absolute right-2 top-2 rounded-lg border border-white/10 bg-black/20 px-2 py-1 text-xs text-white/80 hover:bg-black/35"
+              type="button"
+              aria-label="Close popup"
+            >
+              ✕
+            </button>
+          )}
+          <div className="p-4">{children}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+// ---------------------------------------------------------------------------
+
+
+
 export default function SchematicMap() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const svgRef = useRef<SVGSVGElement | null>(null);
 
   const [zoom, setZoom] = useState(2);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
@@ -30,6 +207,70 @@ export default function SchematicMap() {
   const [showProposed, setShowProposed] = useState(true);
   const [showGO, setShowGO] = useState(true);
   const [showStreetcar, setShowStreetcar] = useState(true);
+
+  const [popup, setPopup] = useState<PopupState>(null);
+
+  const getRelativePoint = (e: React.MouseEvent) => {
+  const rect = containerRef.current?.getBoundingClientRect();
+  if (!rect) return null;
+  return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+};
+
+
+  const svgPointToContainerPx = (svgX: number, svgY: number) => {
+  const svg = svgRef.current;
+  const container = containerRef.current;
+  if (!svg || !container) return null;
+
+  const pt = svg.createSVGPoint();
+  pt.x = svgX;
+  pt.y = svgY;
+
+  const screen = pt.matrixTransform(svg.getScreenCTM()!);
+
+  const rect = container.getBoundingClientRect();
+  return {
+    x: screen.x - rect.left,
+    y: screen.y - rect.top,
+    w: rect.width,
+    h: rect.height,
+  };
+};
+
+
+  const showLinePopup = (e: React.MouseEvent, lineName: string, lineColor?: string) => {
+    const p = getRelativePoint(e);
+    if (!p) return;
+
+    setPopup({
+      kind: "line",
+      x: p.x,
+      y: p.y,
+      name: lineName,
+      color: lineColor,
+      logo: LINE_LOGOS[lineName] ?? <LineBadge color={lineColor} />,
+    });
+  };
+
+  const showStationPopupAt = (stationName: string, svgX: number, svgY: number) => {
+  const p = svgPointToContainerPx(svgX, svgY);
+  if (!p) return;
+
+  setPopup({
+    kind: "station",
+    x: p.x,
+    y: p.y,
+    name: stationName,
+    logo: <TTCLogo />,
+    details: [
+      { label: "Lines", value: "Line 1" },
+      { label: "Transfers", value: "—" },
+      { label: "Accessibility", value: "—" },
+    ],
+  });
+};
+
+
 
   const MAP_W = window.innerWidth;
   const MAP_H = window.innerHeight;
@@ -110,10 +351,18 @@ export default function SchematicMap() {
 
   // Dragging
   const handleMouseDown = (e: React.MouseEvent) => {
-    if (zoom === Z_MIN) return;
-    setDragging(true);
-    setLastPos({ x: e.clientX, y: e.clientY });
-  };
+  const target = e.target as Element | null;
+
+  // ✅ don't start dragging if mousedown begins on a station/line OR on the popup
+  if (target?.closest?.('[data-interactive="1"]')) return;
+  if (target?.closest?.('[data-popup="1"]')) return;
+
+  if (zoom === Z_MIN) return;
+  setDragging(true);
+  setLastPos({ x: e.clientX, y: e.clientY });
+};
+
+
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!dragging || !lastPos) return;
@@ -177,60 +426,126 @@ export default function SchematicMap() {
     }
 
 
-    function renderGoStrokeBySvc(svc: Svc, color: string, thickness: number, d: string, key: string) {
-      switch (svc) {
-        case "limited":
-          // Hollow 
-          return (
-            <g key={key}>
-              <path
-                d={d}
-                stroke={color}
-                strokeWidth={thickness}
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                fill="none"
-              />
-              <path
-                d={d}
-                stroke={MAP_BG}
-                strokeWidth={Math.max(1, thickness - 3)} // tweak inner gap by changing 3
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                fill="none"
-              />
-            </g>
-          );
-        case "peakOnly":
-          // Dashed
-          return (
-            <path
-              key={key}
-              d={d}
-              stroke={color}
-              strokeWidth={thickness}
-              strokeLinejoin="round"
-              strokeLinecap="butt"
-              strokeDasharray="4 4" // tweak pattern
-              fill="none"
-            />
-          );
-        case "rapid":
-        default:
-          // Solid
-          return (
-            <path
-              key={key}
-              d={d}
-              stroke={color}
-              strokeWidth={thickness}
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              fill="none"
-            />
-          );
-      }
-    }
+    function renderGoStrokeBySvc(
+  svc: Svc,
+  color: string,
+  thickness: number,
+  d: string,
+  key: string,
+  onClick?: (e: React.MouseEvent) => void
+) {
+  const hitProps = {
+    className: "cursor-pointer",
+    "data-interactive": "1" as const,
+    onMouseDown: (e: React.MouseEvent) => e.stopPropagation(),
+    onClick: (e: React.MouseEvent) => {
+      e.stopPropagation();
+      onClick?.(e);
+    },
+  };
+
+  switch (svc) {
+    case "limited":
+      // Hollow: OUTER color + INNER background
+      // Add a fat invisible hit-path on top so it's easy to click
+      return (
+        <g key={key}>
+          {/* visible */}
+          <path
+            d={d}
+            stroke={color}
+            strokeWidth={thickness}
+            strokeLinejoin="round"
+            strokeLinecap="round"
+            fill="none"
+            style={{ pointerEvents: "none" }}
+          />
+          <path
+            d={d}
+            stroke={MAP_BG}
+            strokeWidth={Math.max(1, thickness - 3)}
+            strokeLinejoin="round"
+            strokeLinecap="round"
+            fill="none"
+            style={{ pointerEvents: "none" }}
+          />
+
+          {/* invisible fat click target */}
+          <path
+            d={d}
+            stroke="transparent"
+            strokeWidth={Math.max(14, thickness + 10)}
+            strokeLinejoin="round"
+            strokeLinecap="round"
+            fill="none"
+            style={{ pointerEvents: "stroke" }}
+            {...hitProps}
+          />
+        </g>
+      );
+
+    case "peakOnly":
+      // Dashed (same: add invisible hit-path)
+      return (
+        <g key={key}>
+          {/* visible */}
+          <path
+            d={d}
+            stroke={color}
+            strokeWidth={thickness}
+            strokeLinejoin="round"
+            strokeLinecap="butt"
+            strokeDasharray="4 4"
+            fill="none"
+            style={{ pointerEvents: "none" }}
+          />
+
+          {/* invisible fat click target */}
+          <path
+            d={d}
+            stroke="transparent"
+            strokeWidth={Math.max(14, thickness + 10)}
+            strokeLinejoin="round"
+            strokeLinecap="round"
+            fill="none"
+            style={{ pointerEvents: "stroke" }}
+            {...hitProps}
+          />
+        </g>
+      );
+
+    case "rapid":
+    default:
+      // Solid (same: add invisible hit-path)
+      return (
+        <g key={key}>
+          {/* visible */}
+          <path
+            d={d}
+            stroke={color}
+            strokeWidth={thickness}
+            strokeLinejoin="round"
+            strokeLinecap="round"
+            fill="none"
+            style={{ pointerEvents: "none" }}
+          />
+
+          {/* invisible fat click target */}
+          <path
+            d={d}
+            stroke="transparent"
+            strokeWidth={Math.max(14, thickness + 10)}
+            strokeLinejoin="round"
+            strokeLinecap="round"
+            fill="none"
+            style={{ pointerEvents: "stroke" }}
+            {...hitProps}
+          />
+        </g>
+      );
+  }
+}
+
 // ---------------------------------------------------------------------------
 
 
@@ -264,6 +579,16 @@ export default function SchematicMap() {
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
+      onClick={(e) => {
+        const el = e.target as Element | null;
+
+        // Don't close if you clicked a station/line (interactive) or inside the popup bubble
+        if (el?.closest?.('[data-interactive="1"]')) return;
+        if (el?.closest?.('[data-popup="1"]')) return;
+
+        setPopup(null);
+      }}
+
     >
       {/* Switch toggles */}
       <div className="absolute top-4 left-4 z-10 flex flex-col gap-4">
@@ -285,7 +610,7 @@ export default function SchematicMap() {
         </label>
 
         {/* Proposed toggle */}
-        <label className="flex items-center gap-2 text-white">
+        {/* <label className="flex items-center gap-2 text-white">
           <span>Proposed</span>
           <button
             onClick={() => setShowProposed((p) => !p)}
@@ -299,7 +624,7 @@ export default function SchematicMap() {
               }`}
             />
           </button>
-        </label>
+        </label> */}
 
         {/* GO toggle */}
         <label className="flex items-center gap-2 text-white">
@@ -339,6 +664,7 @@ export default function SchematicMap() {
       
 
       <svg
+        ref={svgRef}
         viewBox={`0 0 ${MAP_W * 2} ${MAP_H * 2}`}
         width={MAP_W}
         height={MAP_H}
@@ -403,8 +729,9 @@ export default function SchematicMap() {
               })
               .join(" ");
 
-            if (srcByRef.get(line) === "go") {
+           if (srcByRef.get(line) === "go") {
               const segs = buildServiceSegments(line.pathPoints as PathPoint[], tx, ty);
+
               return (
                 <>
                   {segs.map((seg, idx) =>
@@ -413,12 +740,14 @@ export default function SchematicMap() {
                       line.color,
                       line.thickness,
                       seg.d,
-                      `${srcByRef.get(line) ?? "unknown"}-${line.id}-seg-${idx}`
+                      `${srcByRef.get(line) ?? "unknown"}-${line.id}-seg-${idx}`,
+                      (e) => showLinePopup(e, line.name, line.color) 
                     )
                   )}
                 </>
               );
             }
+
             return (
               <path
                 key={`${srcByRef.get(line) ?? "unknown"}-${line.id}`}
@@ -428,6 +757,11 @@ export default function SchematicMap() {
                 strokeLinejoin="round"
                 strokeLinecap="round"
                 fill="none"
+                className="cursor-pointer"
+                onClick={(e) => {
+                    e.stopPropagation();                   
+                    showLinePopup(e, line.name, line.color);
+                  }}
               />
             );
           }
@@ -447,7 +781,11 @@ export default function SchematicMap() {
                   <g
                     key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
                     className="cursor-pointer"
-                    onClick={() => alert(`Clicked station: ${s.name}`)}
+                    onMouseDown={(e) => e.stopPropagation()}  
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      showStationPopupAt(s.name, cx, cy);
+                    }}
                   >
                     <circle cx={cx} cy={cy} r={4} fill="white" stroke={line.color} strokeWidth={1.5} />
                   </g>
@@ -459,7 +797,12 @@ export default function SchematicMap() {
                   <g
                     key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
                     className="cursor-pointer"
-                    onClick={() => alert(`Clicked station: ${s.name}`)}
+                    data-interactive="1"
+                    onMouseDown={(e) => e.stopPropagation()}  
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      showStationPopupAt(s.name, cx, cy);
+                    }}
                   >
                     <rect x={cx - 5.25} y={cy - 5.25} width={10.5} height={10.5} fill="grey" rx={1} ry={1} />
                     <circle cx={cx} cy={cy} r={2.25} fill="white" />
@@ -472,7 +815,10 @@ export default function SchematicMap() {
                   <g
                     key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
                     className="cursor-pointer"
-                    onClick={() => alert(`Clicked station: ${s.name}`)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      showStationPopupAt(s.name, cx, cy);
+                    }}
                   >
                     <rect x={cx - 5} y={cy - 5} width={10} height={10} fill="grey" rx={3} ry={3} />
                     <circle cx={cx} cy={cy} r={2.25} fill="white" />
@@ -485,7 +831,10 @@ export default function SchematicMap() {
                    <g
                     key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
                     className="cursor-pointer"
-                    onClick={() => alert(`Clicked station: ${s.name}`)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      showStationPopupAt(s.name, cx, cy);
+                    }}
                   >
                     <rect x={cx - 5.25} y={cy - 5.25} width={10.5} height={10.5} fill="grey" rx={3} ry={3}  transform={`rotate(45 ${cx} ${cy})`} />
                     <circle cx={cx} cy={cy} r={2.25} fill="white" />
@@ -498,7 +847,10 @@ export default function SchematicMap() {
                   <g
                     key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
                     className="cursor-pointer"
-                    onClick={() => alert(`Clicked station: ${s.name}`)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      showStationPopupAt(s.name, cx, cy);
+                    }}
                   >
                     <rect x={cx - 5} y={cy - 5} width={10} height={20} fill="grey" rx={3} ry={3} />
                     <circle cx={cx} cy={cy + 1} r={2.5} fill="white" />
@@ -512,6 +864,10 @@ export default function SchematicMap() {
                   <g
                     key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
                     className=""
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      showStationPopupAt(s.name, cx, cy);
+                    }}
                   >
                     {/* Outer ring */}
                     <circle cx={cx} cy={cy} r={2.5} fill={line.color} />
@@ -539,7 +895,10 @@ export default function SchematicMap() {
                   <g
                     key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
                     className="cursor-pointer"
-                    onClick={() => alert(`Clicked station: ${s.name}`)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      showStationPopupAt(s.name, cx, cy);
+                    }}
                   >
                     <circle cx={cx} cy={cy} r={4} fill="white" stroke={line.color} strokeWidth={1.25} />
                   </g>
@@ -551,7 +910,10 @@ export default function SchematicMap() {
                   <g
                     key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
                     className="cursor-pointer"
-                    onClick={() => alert(`Clicked station: ${s.name}`)}
+                   onClick={(e) => {
+                      e.stopPropagation();
+                      showStationPopupAt(s.name, cx, cy);
+                    }}
                   >
                     <circle cx={cx} cy={cy} r={3} fill="white" stroke={line.color} strokeWidth={1} />
                   </g>
@@ -564,7 +926,10 @@ export default function SchematicMap() {
                   <g
                     key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
                     className="cursor-pointer"
-                    onClick={() => alert(`Clicked station: ${s.name}`)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      showStationPopupAt(s.name, cx, cy);
+                    }}
                   >
                     <rect x={cx - 5.25} y={cy - 5.25} width={10.5} height={10.5} fill="grey" rx={1} ry={1} />
                     <circle cx={cx} cy={cy} r={2.25} fill="white" />
@@ -577,7 +942,10 @@ export default function SchematicMap() {
                   <g
                     key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
                     className="cursor-pointer"
-                    onClick={() => alert(`Clicked station: ${s.name}`)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      showStationPopupAt(s.name, cx, cy);
+                    }}
                   >
                     <rect x={cx - 5} y={cy - 5} width={10} height={10} fill="grey" rx={2} ry={2} />
                     <circle cx={cx} cy={cy} r={2.25} fill="white" />
@@ -590,7 +958,10 @@ export default function SchematicMap() {
                   <g
                     key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
                     className="cursor-pointer"
-                    onClick={() => alert(`Clicked station: ${s.name}`)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      showStationPopupAt(s.name, cx, cy);
+                    }}
                   >
                     <rect x={cx - 5} y={cy - 5} width={20} height={10} fill="grey" rx={3} ry={3} />
                     <circle cx={cx + 1} cy={cy} r={2.5} fill="white" />
@@ -604,7 +975,10 @@ export default function SchematicMap() {
                   <g
                     key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
                     className="cursor-pointer"
-                    onClick={() => alert(`Clicked station: ${s.name}`)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      showStationPopupAt(s.name, cx, cy);
+                    }}
                   >
                     <rect x={cx - 5} y={cy - 5} width={10} height={20} fill="grey" rx={3} ry={3} />
                     <circle cx={cx} cy={cy + 1} r={2.5} fill="white" />
@@ -618,7 +992,10 @@ export default function SchematicMap() {
                   <g
                     key={`${srcByRef.get(line) ?? "unknown"}-${line.id}-${s.id}`}
                     className="cursor-pointer"
-                    onClick={() => alert(`Clicked station: ${s.name}`)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      showStationPopupAt(s.name, cx, cy);
+                    }}
                   >
                     <rect x={cx - 5} y={cy - 5} width={10} height={52.5} fill="grey" rx={3} ry={3} />
                     <circle cx={cx} cy={cy} r={2.25} fill="white" />
@@ -637,6 +1014,22 @@ export default function SchematicMap() {
         }
 
       </svg>
+        {popup && (
+        <MapPopup
+          x={popup.x}
+          y={popup.y}
+          placement="left"
+          onClose={() => setPopup(null)}
+          containerWidth={containerRef.current?.getBoundingClientRect().width}
+          containerHeight={containerRef.current?.getBoundingClientRect().height}
+        >
+          {popup.kind === "line" ? (
+            <LinePopupContent logo={popup.logo} name={popup.name} />
+          ) : (
+            <StationPopupContent logo={popup.logo} name={popup.name} details={popup.details} />
+          )}
+        </MapPopup>
+      )}
     </div>
   );
 }

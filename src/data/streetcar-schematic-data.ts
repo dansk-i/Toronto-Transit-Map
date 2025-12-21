@@ -83,8 +83,8 @@ export const streetcarLines = [
       { cmd: "L", x: 75, y: 92.5 },
       { cmd: "L", x: 75, y: 92.5 },
       { cmd: "L", x: 335, y: 92.5 },
-      { cmd: "L", x: 335, y: 80.5 },
-      { cmd: "L", x: 375, y: 80.5 },
+      //{ cmd: "L", x: 335, y: 80.5 },
+      { cmd: "L", x: 375, y: 55 },
       { cmd: "L", x: 375, y: 25 },
     ],
     stations: [
@@ -135,11 +135,12 @@ export const streetcarLines = [
       { cmd: "M", x: -275, y: 145 },
       { cmd: "L", x: -330, y: 145 },
       { cmd: "L", x: -350, y: 165 },
-      { cmd: "L", x: -350, y: 255 },
-      { cmd: "L", x: -360, y: 265 },
-      { cmd: "L", x: -490, y: 265 },
-      { cmd: "L", x: -500, y: 255 },
-      { cmd: "L", x: -500, y: 242 },
+      { cmd: "L", x: -350, y: 245 },
+      //{ cmd: "L", x: -350, y: 255 },
+      // { cmd: "L", x: -360, y: 265 },
+      // { cmd: "L", x: -465, y: 265 },
+      // { cmd: "L", x: -475, y: 255 },
+      // { cmd: "L", x: -475, y: 242 },
       
       
     ],
